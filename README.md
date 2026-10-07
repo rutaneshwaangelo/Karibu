@@ -99,3 +99,4 @@ The application includes **1-Click Demo Autofill** in the login modal for effort
 7. Click **Staff** autofill and log in.
 8. In the **Live Service Console**, observe the active customer countdown and click **+5 min** or **+10 min** to test dynamic service duration adjustment.
 9. Watch the waiting customer's estimated wait time update automatically!
+"# Karibu" 
