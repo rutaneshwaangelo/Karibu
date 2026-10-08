@@ -33,14 +33,14 @@ const seedData = async () => {
     console.log('[Seeder] Connected to MongoDB...');
 
     // 1. Seed Platform Admin
-    const adminEmail = 'admin@karibu.com';
+    const adminEmail = 'admin@gmail.com';
 
     let admin = await User.findOne({ email: adminEmail }).select('+password');
 
     if (!admin) {
       admin = await User.create({
         name: 'karibu_admin',
-        email :'admin@karibu.com',
+        email :'admin@gmail.com',
         password: '123karibu',
         role: 'ADMIN',
         businessId: null,
