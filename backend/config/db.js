@@ -1,19 +1,21 @@
 const mongoose = require('mongoose');
+const dns = require('dns');
 
-/**
- * Connect to MongoDB database
- */
+// Force Node.js to use Google DNS for MongoDB SRV resolution
+dns.setServers(['8.8.8.8', '8.8.4.4']);
+
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI, {
-      // Modern mongoose settings
-    });
-    console.log(`[MongoDB] Connected successfully: ${conn.connection.host}/${conn.connection.name}`);
+    const conn = await mongoose.connect(process.env.MONGODB_URI);
+
+    console.log(
+      `[MongoDB] Connected successfully: ${conn.connection.host}/${conn.connection.name}`
+    );
+
     return conn;
   } catch (error) {
     console.error(`[MongoDB] Connection error: ${error.message}`);
-    // Do not crash immediately in dev if DB is starting up, but log clearly
-    return null;
+    throw error;
   }
 };
 

@@ -34,24 +34,36 @@ const seedData = async () => {
 
     // 1. Seed Platform Admin
     const adminEmail = 'admin@karibu.com';
-    let admin = await User.findOne({ email: adminEmail });
+
+    let admin = await User.findOne({ email: adminEmail }).select('+password');
 
     if (!admin) {
       admin = await User.create({
-        name: 'KARIBU System Admin',
+        name: 'karibu_admin',
         email: adminEmail,
-        password: 'Admin@Karibu2026!',
+        password: '123karibu',
         role: 'ADMIN',
+        businessId: null,
         active: true,
       });
-      console.log(`[Seeder] Created default ADMIN: ${adminEmail} (Password: Admin@Karibu2026!)`);
+
+      console.log(`[Seeder] Created ADMIN: ${adminEmail}`);
     } else {
-      console.log(`[Seeder] Default ADMIN already exists: ${adminEmail}`);
+      admin.name = 'karibu_admin';
+      admin.password = '123karibu';
+      admin.role = 'ADMIN';
+      admin.businessId = null;
+      admin.active = true;
+
+      await admin.save();
+
+      console.log(`[Seeder] Updated ADMIN: ${adminEmail}`);
     }
 
     // 2. Seed Default Categories
     for (const catData of initialCategories) {
       const exists = await Category.findOne({ name: catData.name });
+
       if (!exists) {
         await Category.create(catData);
         console.log(`[Seeder] Seeded Category: "${catData.name}"`);
@@ -59,6 +71,7 @@ const seedData = async () => {
     }
 
     console.log('[Seeder] Database seeding completed successfully!');
+
     process.exit(0);
   } catch (error) {
     console.error('[Seeder] Error seeding data:', error.message);
