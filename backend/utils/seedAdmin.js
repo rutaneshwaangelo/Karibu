@@ -40,7 +40,7 @@ const seedData = async () => {
     if (!admin) {
       admin = await User.create({
         name: 'karibu_admin',
-        email: adminEmail,
+        email :'admin@karibu.com',
         password: '123karibu',
         role: 'ADMIN',
         businessId: null,
