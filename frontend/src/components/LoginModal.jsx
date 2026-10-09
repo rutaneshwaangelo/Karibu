@@ -46,24 +46,23 @@ export const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
       style={{
         position: 'fixed',
         inset: 0,
-        backgroundColor: 'rgba(9, 13, 22, 0.85)',
+        backgroundColor: 'rgba(43, 35, 32, 0.35)',
         backdropFilter: 'blur(8px)',
         zIndex: 1000,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '1.5rem',
+        padding: '1rem',
       }}
       onClick={onClose}
     >
       <div
-        className="glass-card"
+        className="glass-card modal-panel"
         style={{
-          width: '100%',
-          maxWidth: '440px',
-          background: '#0F172A',
-          borderColor: 'rgba(255, 255, 255, 0.12)',
+          background: 'var(--bg-card)',
+          borderColor: 'var(--border-subtle)',
           position: 'relative',
+          '--panel-width': '440px',
         }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -98,7 +97,6 @@ export const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
               width: '46px',
               height: '46px',
               objectFit: 'contain',
-              mixBlendMode: 'screen',
             }}
           />
           <span
@@ -106,7 +104,8 @@ export const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
               fontWeight: 800,
               fontSize: '1.35rem',
               letterSpacing: '-0.02em',
-              color: '#FFF',
+              color: 'var(--text-primary)',
+              fontFamily: 'var(--font-display)',
             }}
           >
             KARIBU
@@ -125,14 +124,14 @@ export const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
           <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '0.4rem', textTransform: 'uppercase' }}>
             Quick Demo Autofill:
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.4rem' }}>
+          <div className="resp-grid cols-3" style={{ gap: '0.4rem' }}>
             <button
               type="button"
               className="btn btn-secondary"
               onClick={() => fillCredentials('ADMIN')}
               style={{ fontSize: '0.75rem', padding: '0.4rem 0.2rem' }}
             >
-              <ShieldCheck size={13} color="#8B5CF6" /> Admin
+              <ShieldCheck size={13} color="#8A6FA8" /> Admin
             </button>
             <button
               type="button"
@@ -140,7 +139,7 @@ export const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
               onClick={() => fillCredentials('OWNER')}
               style={{ fontSize: '0.75rem', padding: '0.4rem 0.2rem' }}
             >
-              <Store size={13} color="#F59E0B" /> Owner
+              <Store size={13} color="#C25E3A" /> Owner
             </button>
             <button
               type="button"
@@ -148,7 +147,7 @@ export const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
               onClick={() => fillCredentials('STAFF')}
               style={{ fontSize: '0.75rem', padding: '0.4rem 0.2rem' }}
             >
-              <UserCheck size={13} color="#10B981" /> Staff
+              <UserCheck size={13} color="#4C8C6A" /> Staff
             </button>
           </div>
         </div>
@@ -158,9 +157,9 @@ export const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
             style={{
               padding: '0.65rem 0.85rem',
               borderRadius: 'var(--radius-md)',
-              background: 'rgba(244, 63, 94, 0.15)',
-              border: '1px solid rgba(244, 63, 94, 0.3)',
-              color: '#FB7185',
+              background: 'rgba(194, 94, 88, 0.1)',
+              border: '1px solid rgba(194, 94, 88, 0.3)',
+              color: '#A33D38',
               fontSize: '0.85rem',
               marginBottom: '1rem',
             }}

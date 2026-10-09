@@ -60,7 +60,7 @@ export const CustomerQueueStatus = ({ queueId, onBackToHome }) => {
   if (loading) {
     return (
       <div className="container" style={{ textAlign: 'center', padding: '6rem 1rem' }}>
-        <div style={{ color: '#FBBF24', fontSize: '1.2rem', fontWeight: 600 }}>
+        <div style={{ color: '#A84E2E', fontSize: '1.2rem', fontWeight: 600 }}>
           Retrieving your live queue ticket...
         </div>
       </div>
@@ -69,9 +69,9 @@ export const CustomerQueueStatus = ({ queueId, onBackToHome }) => {
 
   if (error || !queueData) {
     return (
-      <div className="container" style={{ maxWidth: '500px', margin: '4rem auto' }}>
+      <div className="container" style={{ width: '100%', maxWidth: '500px', margin: '4rem auto' }}>
         <div className="glass-card" style={{ textAlign: 'center', padding: '3rem 2rem' }}>
-          <AlertCircle size={44} color="#FB7185" style={{ marginBottom: '1rem' }} />
+          <AlertCircle size={44} color="#C25E58" style={{ marginBottom: '1rem' }} />
           <h3>Queue Ticket Not Found</h3>
           <p style={{ marginTop: '0.5rem', marginBottom: '1.5rem' }}>
             {error || 'This queue ticket is not active or has been removed.'}
@@ -90,9 +90,9 @@ export const CustomerQueueStatus = ({ queueId, onBackToHome }) => {
   const isCancelled = queueData.status === 'CANCELLED' || queueData.status === 'LEFT';
 
   return (
-    <div className="container" style={{ maxWidth: '640px', padding: '2.5rem 1.5rem 5rem' }}>
+    <div className="container" style={{ width: '100%', maxWidth: '640px', padding: 'clamp(1.5rem, 5vw, 2.5rem) clamp(1rem, 4vw, 1.5rem) 5rem' }}>
       {/* Navigation Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem 0.75rem', marginBottom: '1.5rem' }}>
         <button
           className="btn btn-secondary"
           onClick={onBackToHome}
@@ -101,8 +101,8 @@ export const CustomerQueueStatus = ({ queueId, onBackToHome }) => {
           <ArrowLeft size={15} /> All Businesses
         </button>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.75rem', color: '#34D399', fontWeight: 600 }}>
-          <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#10B981', animation: 'pulse-dot 1.5s infinite' }} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.75rem', color: '#4C8C6A', fontWeight: 600 }}>
+          <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#4C8C6A', animation: 'pulse-dot 1.5s infinite' }} />
           Live Real-Time Tracker
         </div>
       </div>
@@ -112,15 +112,15 @@ export const CustomerQueueStatus = ({ queueId, onBackToHome }) => {
         className="glass-card"
         style={{
           textAlign: 'center',
-          padding: '2.5rem 2rem',
+          padding: '2.5rem clamp(1rem, 4vw, 2rem)',
           position: 'relative',
           overflow: 'hidden',
           borderColor: isServing
-            ? 'rgba(16, 185, 129, 0.4)'
-            : 'rgba(245, 158, 11, 0.35)',
+            ? 'rgba(76, 140, 106, 0.45)'
+            : 'rgba(194, 94, 58, 0.35)',
           boxShadow: isServing
-            ? '0 0 35px rgba(16, 185, 129, 0.2)'
-            : '0 0 35px rgba(245, 158, 11, 0.15)',
+            ? 'var(--shadow-md)'
+            : 'var(--shadow-md)',
         }}
       >
         {/* KARIBU Watermark */}
@@ -135,8 +135,7 @@ export const CustomerQueueStatus = ({ queueId, onBackToHome }) => {
             width: '40px',
             height: '40px',
             objectFit: 'contain',
-            mixBlendMode: 'screen',
-            opacity: 0.5,
+            opacity: 0.6,
             pointerEvents: 'none',
           }}
         />
@@ -149,14 +148,14 @@ export const CustomerQueueStatus = ({ queueId, onBackToHome }) => {
             gap: '0.45rem',
             padding: '0.35rem 0.85rem',
             borderRadius: 'var(--radius-full)',
-            background: 'rgba(255, 255, 255, 0.05)',
+            background: 'var(--bg-secondary)',
             border: '1px solid var(--border-subtle)',
             fontSize: '0.85rem',
             marginBottom: '1rem',
           }}
         >
-          <Building size={14} color="#FBBF24" />
-          <span style={{ fontWeight: 600, color: '#FFF' }}>{queueData.business.name}</span>
+          <Building size={14} color="#A84E2E" />
+          <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{queueData.business.name}</span>
         </div>
 
         {/* Big Queue Number */}
@@ -180,12 +179,12 @@ export const CustomerQueueStatus = ({ queueId, onBackToHome }) => {
             style={{
               padding: '1.75rem',
               borderRadius: 'var(--radius-lg)',
-              background: 'rgba(16, 185, 129, 0.08)',
-              border: '1px solid rgba(16, 185, 129, 0.3)',
+              background: 'rgba(76, 140, 106, 0.08)',
+              border: '1px solid rgba(76, 140, 106, 0.3)',
               marginBottom: '1.75rem',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', color: '#34D399', fontWeight: 700, fontSize: '1.1rem', marginBottom: '0.75rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', color: '#356B4E', fontWeight: 700, fontSize: '1.1rem', marginBottom: '0.75rem' }}>
               <Sparkles size={18} />
               <span>It is your turn! Please proceed to the service desk.</span>
             </div>
@@ -199,7 +198,7 @@ export const CustomerQueueStatus = ({ queueId, onBackToHome }) => {
             />
 
             {queueData.extensionMinutes > 0 && (
-              <div style={{ marginTop: '0.85rem', fontSize: '0.8rem', color: '#FBBF24', fontFamily: 'var(--font-mono)' }}>
+              <div style={{ marginTop: '0.85rem', fontSize: '0.8rem', color: '#96660F', fontFamily: 'var(--font-mono)' }}>
                 Time adjusted by staff: +{queueData.extensionMinutes} minutes
               </div>
             )}
@@ -208,9 +207,8 @@ export const CustomerQueueStatus = ({ queueId, onBackToHome }) => {
 
         {isWaiting && (
           <div
+            className="resp-grid cols-2"
             style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(2, 1fr)',
               gap: '1rem',
               marginBottom: '2rem',
             }}
@@ -219,14 +217,14 @@ export const CustomerQueueStatus = ({ queueId, onBackToHome }) => {
               style={{
                 padding: '1.25rem',
                 borderRadius: 'var(--radius-md)',
-                background: 'rgba(255, 255, 255, 0.03)',
+                background: 'var(--bg-secondary)',
                 border: '1px solid var(--border-subtle)',
               }}
             >
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.25rem' }}>
                 Position Ahead
               </div>
-              <div style={{ fontSize: '1.8rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#FBBF24' }}>
+              <div style={{ fontSize: '1.8rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#96660F' }}>
                 #{queueData.position}
               </div>
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
@@ -238,14 +236,14 @@ export const CustomerQueueStatus = ({ queueId, onBackToHome }) => {
               style={{
                 padding: '1.25rem',
                 borderRadius: 'var(--radius-md)',
-                background: 'rgba(255, 255, 255, 0.03)',
+                background: 'var(--bg-secondary)',
                 border: '1px solid var(--border-subtle)',
               }}
             >
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.25rem' }}>
                 Est. Waiting Time
               </div>
-              <div style={{ fontSize: '1.8rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#38BDF8' }}>
+              <div style={{ fontSize: '1.8rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#35597B' }}>
                 ~{queueData.estimatedWaitMinutes}m
               </div>
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
@@ -260,13 +258,13 @@ export const CustomerQueueStatus = ({ queueId, onBackToHome }) => {
             style={{
               padding: '2rem',
               borderRadius: 'var(--radius-lg)',
-              background: 'rgba(59, 130, 246, 0.1)',
-              border: '1px solid rgba(59, 130, 246, 0.3)',
+              background: 'rgba(74, 123, 166, 0.1)',
+              border: '1px solid rgba(74, 123, 166, 0.3)',
               marginBottom: '1.75rem',
             }}
           >
-            <UserCheck size={36} color="#60A5FA" style={{ margin: '0 auto 0.75rem' }} />
-            <h3 style={{ fontSize: '1.3rem', color: '#FFF' }}>Service Completed</h3>
+            <UserCheck size={36} color="#35597B" style={{ margin: '0 auto 0.75rem' }} />
+            <h3 style={{ fontSize: '1.3rem', color: 'var(--text-primary)' }}>Service Completed</h3>
             <p style={{ marginTop: '0.5rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
               Your session has concluded. Thank you for using the KARIBU Smart Queue System!
             </p>
@@ -278,12 +276,12 @@ export const CustomerQueueStatus = ({ queueId, onBackToHome }) => {
             style={{
               padding: '1.5rem',
               borderRadius: 'var(--radius-lg)',
-              background: 'rgba(244, 63, 94, 0.1)',
-              border: '1px solid rgba(244, 63, 94, 0.3)',
+              background: 'rgba(194, 94, 88, 0.1)',
+              border: '1px solid rgba(194, 94, 88, 0.3)',
               marginBottom: '1.75rem',
             }}
           >
-            <h4 style={{ color: '#FB7185' }}>Ticket No Longer Active</h4>
+            <h4 style={{ color: '#A33D38' }}>Ticket No Longer Active</h4>
             <p style={{ marginTop: '0.4rem', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
               This queue entry has been {queueData.status.toLowerCase()}.
             </p>
@@ -296,6 +294,8 @@ export const CustomerQueueStatus = ({ queueId, onBackToHome }) => {
             borderTop: '1px solid var(--border-subtle)',
             paddingTop: '1.25rem',
             display: 'flex',
+            flexWrap: 'wrap',
+            gap: '0.35rem 1rem',
             justifyContent: 'space-between',
             alignItems: 'center',
             fontSize: '0.85rem',
@@ -304,14 +304,14 @@ export const CustomerQueueStatus = ({ queueId, onBackToHome }) => {
         >
           <div>
             <span style={{ color: 'var(--text-muted)' }}>Service: </span>
-            <span style={{ fontWeight: 600, color: '#FFF' }}>{queueData.service.name}</span>
-            <span style={{ color: '#FBBF24', marginLeft: '0.35rem', fontFamily: 'var(--font-mono)' }}>
+            <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{queueData.service.name}</span>
+            <span style={{ color: '#96660F', marginLeft: '0.35rem', fontFamily: 'var(--font-mono)' }}>
               ({queueData.service.durationMinutes} min)
             </span>
           </div>
           <div>
             <span style={{ color: 'var(--text-muted)' }}>Customer: </span>
-            <span style={{ fontWeight: 600, color: '#FFF' }}>{queueData.customer.name}</span>
+            <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{queueData.customer.name}</span>
           </div>
         </div>
 

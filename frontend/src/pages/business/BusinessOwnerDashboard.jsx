@@ -22,6 +22,7 @@ import {
   Zap,
   X,
   ShieldCheck,
+  Lock,
 } from 'lucide-react';
 
 export const BusinessOwnerDashboard = () => {
@@ -250,9 +251,9 @@ export const BusinessOwnerDashboard = () => {
   return (
     <div className="container" style={{ padding: '2rem 1.5rem 5rem' }}>
       {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '2rem' }}>
         <div>
-          <div style={{ fontSize: '0.8rem', color: '#FBBF24', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>
+          <div style={{ fontSize: '0.8rem', color: '#A84E2E', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>
             BUSINESS MANAGEMENT CONSOLE
           </div>
           <h1 style={{ fontSize: '1.9rem' }}>{profile?.name || 'Business Portal'}</h1>
@@ -263,9 +264,9 @@ export const BusinessOwnerDashboard = () => {
             style={{
               padding: '0.5rem 1rem',
               borderRadius: 'var(--radius-md)',
-              background: 'rgba(16, 185, 129, 0.15)',
-              border: '1px solid rgba(16, 185, 129, 0.3)',
-              color: '#34D399',
+              background: 'rgba(76, 140, 106, 0.1)',
+              border: '1px solid rgba(76, 140, 106, 0.3)',
+              color: '#356B4E',
               fontSize: '0.85rem',
             }}
           >
@@ -316,7 +317,7 @@ export const BusinessOwnerDashboard = () => {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(220px, 100%), 1fr))',
               gap: '1.25rem',
               marginBottom: '2rem',
             }}
@@ -325,7 +326,7 @@ export const BusinessOwnerDashboard = () => {
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
                 Queues Today
               </div>
-              <div style={{ fontSize: '2rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#FBBF24', margin: '0.4rem 0' }}>
+              <div style={{ fontSize: '2rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#A84E2E', margin: '0.4rem 0' }}>
                 {dashboardData?.totalQueuesToday || 0}
               </div>
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Daily total joined</div>
@@ -335,7 +336,7 @@ export const BusinessOwnerDashboard = () => {
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
                 Currently Waiting
               </div>
-              <div style={{ fontSize: '2rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#38BDF8', margin: '0.4rem 0' }}>
+              <div style={{ fontSize: '2rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#35597B', margin: '0.4rem 0' }}>
                 {dashboardData?.waitingCount || 0}
               </div>
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Active in waiting line</div>
@@ -345,7 +346,7 @@ export const BusinessOwnerDashboard = () => {
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
                 Completed Today
               </div>
-              <div style={{ fontSize: '2rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#34D399', margin: '0.4rem 0' }}>
+              <div style={{ fontSize: '2rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#356B4E', margin: '0.4rem 0' }}>
                 {dashboardData?.completedToday || 0}
               </div>
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Finished sessions</div>
@@ -355,7 +356,7 @@ export const BusinessOwnerDashboard = () => {
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
                 Active Staff
               </div>
-              <div style={{ fontSize: '2rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#A78BFA', margin: '0.4rem 0' }}>
+              <div style={{ fontSize: '2rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#8A6FA8', margin: '0.4rem 0' }}>
                 {dashboardData?.totalStaff || 0}
               </div>
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Registered operators</div>
@@ -373,8 +374,8 @@ export const BusinessOwnerDashboard = () => {
                   alignItems: 'center',
                   padding: '1.25rem',
                   borderRadius: 'var(--radius-md)',
-                  background: 'rgba(16, 185, 129, 0.08)',
-                  border: '1px solid rgba(16, 185, 129, 0.3)',
+                  background: 'rgba(76, 140, 106, 0.08)',
+                  border: '1px solid rgba(76, 140, 106, 0.3)',
                   flexWrap: 'wrap',
                   gap: '1rem',
                 }}
@@ -391,7 +392,7 @@ export const BusinessOwnerDashboard = () => {
 
                 <div style={{ textAlign: 'right' }}>
                   <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Expected Finish</div>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.2rem', color: '#34D399', fontWeight: 700 }}>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.2rem', color: '#356B4E', fontWeight: 700 }}>
                     {new Date(dashboardData.currentServing.expectedEndAt).toLocaleTimeString()}
                   </div>
                 </div>
@@ -411,7 +412,7 @@ export const BusinessOwnerDashboard = () => {
           {/* Create Service Card */}
           <div className="glass-card" style={{ marginBottom: '2rem' }}>
             <h3 style={{ fontSize: '1.15rem', marginBottom: '1rem' }}>Create New Service</h3>
-            <form onSubmit={handleAddService} style={{ display: 'grid', gridTemplateColumns: '2fr 3fr 1.5fr auto', gap: '1rem', alignItems: 'flex-end' }}>
+            <form onSubmit={handleAddService} className="resp-grid cols-form-wide" style={{ alignItems: 'flex-end' }}>
               <div className="form-group" style={{ marginBottom: 0 }}>
                 <label className="form-label">Service Name</label>
                 <input
@@ -458,14 +459,14 @@ export const BusinessOwnerDashboard = () => {
           {/* Services List */}
           <div className="glass-card">
             <h3 style={{ fontSize: '1.15rem', marginBottom: '1.25rem' }}>Active Business Services ({services.length})</h3>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))', gap: '1rem' }}>
               {services.map((s) => (
                 <div
                   key={s._id}
                   style={{
                     padding: '1.25rem',
                     borderRadius: 'var(--radius-md)',
-                    background: 'rgba(255, 255, 255, 0.03)',
+                    background: 'var(--bg-secondary)',
                     border: '1px solid var(--border-subtle)',
                     display: 'flex',
                     flexDirection: 'column',
@@ -474,8 +475,8 @@ export const BusinessOwnerDashboard = () => {
                 >
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.4rem' }}>
-                      <h4 style={{ fontSize: '1.1rem', color: '#FFF' }}>{s.name}</h4>
-                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: '#FBBF24', background: 'rgba(245, 158, 11, 0.1)', padding: '0.2rem 0.5rem', borderRadius: 'var(--radius-sm)' }}>
+                      <h4 style={{ fontSize: '1.1rem', color: 'var(--text-primary)' }}>{s.name}</h4>
+                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: '#A84E2E', background: 'rgba(194, 94, 58, 0.08)', padding: '0.2rem 0.5rem', borderRadius: 'var(--radius-sm)' }}>
                         {s.durationMinutes} mins
                       </span>
                     </div>
@@ -506,7 +507,7 @@ export const BusinessOwnerDashboard = () => {
           {/* Add Staff Card */}
           <div className="glass-card" style={{ marginBottom: '2rem' }}>
             <h3 style={{ fontSize: '1.15rem', marginBottom: '1rem' }}>Add Staff Member</h3>
-            <form onSubmit={handleAddStaff} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr)) auto', gap: '1rem', alignItems: 'flex-end' }}>
+            <form onSubmit={handleAddStaff} className="resp-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(min(180px, 100%), 1fr))', alignItems: 'flex-end' }}>
               <div className="form-group" style={{ marginBottom: 0 }}>
                 <label className="form-label">Full Name</label>
                 <input
@@ -563,7 +564,7 @@ export const BusinessOwnerDashboard = () => {
           {/* Staff List */}
           <div className="glass-card">
             <h3 style={{ fontSize: '1.15rem', marginBottom: '1.25rem' }}>Staff Team ({staff.length})</h3>
-            <div style={{ overflowX: 'auto' }}>
+            <div className="table-scroll">
               <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                 <thead>
                   <tr style={{ borderBottom: '1px solid var(--border-subtle)', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
@@ -576,12 +577,12 @@ export const BusinessOwnerDashboard = () => {
                 </thead>
                 <tbody>
                   {staff.map((st) => (
-                    <tr key={st._id} style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.04)', fontSize: '0.9rem' }}>
-                      <td style={{ padding: '0.85rem 1rem', fontWeight: 600, color: '#FFF' }}>{st.name}</td>
+                    <tr key={st._id} style={{ borderBottom: '1px solid rgba(43, 35, 32, 0.06)', fontSize: '0.9rem' }}>
+                      <td style={{ padding: '0.85rem 1rem', fontWeight: 600, color: 'var(--text-primary)' }}>{st.name}</td>
                       <td style={{ padding: '0.85rem 1rem', color: 'var(--text-secondary)' }}>{st.email}</td>
                       <td style={{ padding: '0.85rem 1rem', color: 'var(--text-muted)' }}>{st.phone || '—'}</td>
                       <td style={{ padding: '0.85rem 1rem' }}>
-                        <span style={{ fontSize: '0.75rem', color: st.active ? '#34D399' : '#FB7185' }}>
+                        <span style={{ fontSize: '0.75rem', color: st.active ? '#356B4E' : '#A33D38' }}>
                           {st.active ? 'Active' : 'Inactive'}
                         </span>
                       </td>
@@ -606,7 +607,7 @@ export const BusinessOwnerDashboard = () => {
       {/* TAB 4: OPENING HOURS */}
       {activeTab === 'hours' && (
         <div className="glass-card" style={{ maxWidth: '720px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
             <div>
               <h3 style={{ fontSize: '1.25rem' }}>Weekly Operating Schedule</h3>
               <p style={{ fontSize: '0.85rem' }}>Configure the opening and closing hours for queue availability.</p>
@@ -620,18 +621,16 @@ export const BusinessOwnerDashboard = () => {
             {openingHours.map((h, idx) => (
               <div
                 key={h.dayOfWeek}
+                className="resp-grid cols-4"
                 style={{
-                  display: 'grid',
-                  gridTemplateColumns: '120px 100px 1fr 1fr',
-                  gap: '1rem',
                   alignItems: 'center',
                   padding: '0.75rem 1rem',
                   borderRadius: 'var(--radius-md)',
-                  background: 'rgba(255, 255, 255, 0.02)',
+                  background: 'var(--bg-secondary)',
                   border: '1px solid var(--border-subtle)',
                 }}
               >
-                <span style={{ fontWeight: 600, color: '#FFF' }}>{dayNames[h.dayOfWeek]}</span>
+                <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{dayNames[h.dayOfWeek]}</span>
 
                 <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', cursor: 'pointer', fontSize: '0.85rem' }}>
                   <input
@@ -744,8 +743,8 @@ export const BusinessOwnerDashboard = () => {
             className="glass-card"
             style={{
               marginBottom: '2rem',
-              borderColor: isTrial ? 'rgba(245, 158, 11, 0.4)' : 'rgba(16, 185, 129, 0.4)',
-              background: isTrial ? 'rgba(245, 158, 11, 0.05)' : 'rgba(16, 185, 129, 0.05)',
+              borderColor: isTrial ? 'rgba(191, 132, 37, 0.45)' : 'rgba(76, 140, 106, 0.45)',
+              background: isTrial ? 'rgba(191, 132, 37, 0.06)' : 'rgba(76, 140, 106, 0.05)',
             }}
           >
             <div
@@ -759,13 +758,13 @@ export const BusinessOwnerDashboard = () => {
             >
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.35rem' }}>
-                  <CreditCard size={18} color={isTrial ? '#FBBF24' : '#34D399'} />
+                  <CreditCard size={18} color={isTrial ? '#96660F' : '#356B4E'} />
                   <span
                     style={{
                       fontFamily: 'var(--font-mono)',
                       fontSize: '0.8rem',
                       fontWeight: 700,
-                      color: isTrial ? '#FBBF24' : '#34D399',
+                      color: isTrial ? '#96660F' : '#356B4E',
                       textTransform: 'uppercase',
                     }}
                   >
@@ -792,7 +791,7 @@ export const BusinessOwnerDashboard = () => {
 
               <div style={{ textAlign: 'right' }}>
                 <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Status</div>
-                <div style={{ color: '#34D399', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>
+                <div style={{ color: '#356B4E', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>
                   {subscription?.status || 'ACTIVE'}
                 </div>
                 {subscription?.lastPaymentAmount > 0 && (
@@ -810,7 +809,7 @@ export const BusinessOwnerDashboard = () => {
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                background: 'rgba(15, 23, 42, 0.8)',
+                background: 'var(--bg-secondary)',
                 padding: '0.35rem',
                 borderRadius: 'var(--radius-full)',
                 border: '1px solid var(--border-subtle)',
@@ -831,7 +830,7 @@ export const BusinessOwnerDashboard = () => {
                 className={`btn ${billingCycle === 'yearly' ? 'btn-primary' : 'btn-secondary'}`}
                 style={{ borderRadius: 'var(--radius-full)', padding: '0.4rem 1.25rem', fontSize: '0.85rem' }}
               >
-                Annual Billing <span style={{ color: '#34D399', fontWeight: 700 }}>(Save 20%)</span>
+                Annual Billing <span style={{ color: '#356B4E', fontWeight: 700 }}>(Save 20%)</span>
               </button>
             </div>
           </div>
@@ -840,7 +839,7 @@ export const BusinessOwnerDashboard = () => {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(300px, 100%), 1fr))',
               gap: '1.5rem',
               marginBottom: '2rem',
             }}
@@ -857,12 +856,12 @@ export const BusinessOwnerDashboard = () => {
                     flexDirection: 'column',
                     justifyContent: 'space-between',
                     borderColor: p.popular
-                      ? 'rgba(245, 158, 11, 0.5)'
+                      ? 'rgba(194, 94, 58, 0.55)'
                       : isCurrent
-                      ? 'rgba(16, 185, 129, 0.4)'
+                      ? 'rgba(76, 140, 106, 0.45)'
                       : 'var(--border-subtle)',
                     background: p.popular
-                      ? 'rgba(245, 158, 11, 0.04)'
+                      ? 'rgba(194, 94, 58, 0.04)'
                       : 'var(--bg-card)',
                     position: 'relative',
                   }}
@@ -874,8 +873,8 @@ export const BusinessOwnerDashboard = () => {
                         top: '-12px',
                         left: '50%',
                         transform: 'translateX(-50%)',
-                        background: 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
-                        color: '#090D16',
+                        background: '#C25E3A',
+                        color: '#FFFDF8',
                         fontSize: '0.7rem',
                         fontWeight: 800,
                         fontFamily: 'var(--font-mono)',
@@ -891,9 +890,9 @@ export const BusinessOwnerDashboard = () => {
 
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                      <h4 style={{ fontSize: '1.25rem', color: '#FFF' }}>{p.name}</h4>
+                      <h4 style={{ fontSize: '1.25rem', color: 'var(--text-primary)' }}>{p.name}</h4>
                       {isCurrent && (
-                        <span className="badge" style={{ background: 'rgba(16, 185, 129, 0.15)', color: '#34D399', borderColor: 'rgba(16, 185, 129, 0.3)' }}>
+                        <span className="badge" style={{ background: 'rgba(76, 140, 106, 0.12)', color: '#356B4E', borderColor: 'rgba(76, 140, 106, 0.35)' }}>
                           Current Plan
                         </span>
                       )}
@@ -904,7 +903,7 @@ export const BusinessOwnerDashboard = () => {
                     </p>
 
                     <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.35rem', marginBottom: '1.5rem' }}>
-                      <span style={{ fontSize: '2.4rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#FFF' }}>
+                      <span style={{ fontSize: '2.4rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)' }}>
                         ${price}
                       </span>
                       <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
@@ -916,7 +915,7 @@ export const BusinessOwnerDashboard = () => {
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem', marginBottom: '2rem' }}>
                       {p.features.map((feat, idx) => (
                         <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-                          <Check size={15} color="#10B981" />
+                          <Check size={15} color="#4C8C6A" />
                           <span>{feat}</span>
                         </div>
                       ))}
@@ -945,26 +944,23 @@ export const BusinessOwnerDashboard = () => {
           style={{
             position: 'fixed',
             inset: 0,
-            backgroundColor: 'rgba(9, 13, 22, 0.85)',
+            backgroundColor: 'rgba(43, 35, 32, 0.35)',
             backdropFilter: 'blur(10px)',
             zIndex: 1000,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: '1.5rem',
+            padding: '1rem',
           }}
           onClick={() => setPayModalPlan(null)}
         >
           <div
-            className="glass-card"
+            className="glass-card modal-panel"
             style={{
-              width: '100%',
-              maxWidth: '500px',
-              background: '#0F172A',
-              borderColor: 'rgba(255, 255, 255, 0.12)',
+              '--panel-width': '500px',
+              background: 'var(--bg-card)',
+              borderColor: 'var(--border-subtle)',
               position: 'relative',
-              maxHeight: '90vh',
-              overflowY: 'auto',
             }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -984,8 +980,8 @@ export const BusinessOwnerDashboard = () => {
             </button>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
-              <ShieldCheck size={18} color="#10B981" />
-              <span style={{ fontSize: '0.8rem', color: '#34D399', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>
+              <ShieldCheck size={18} color="#4C8C6A" />
+              <span style={{ fontSize: '0.8rem', color: '#356B4E', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>
                 SECURE SUBSCRIPTION CHECKOUT
               </span>
             </div>
@@ -1002,7 +998,7 @@ export const BusinessOwnerDashboard = () => {
               style={{
                 padding: '1rem 1.25rem',
                 borderRadius: 'var(--radius-md)',
-                background: 'rgba(255, 255, 255, 0.03)',
+                background: 'var(--bg-secondary)',
                 border: '1px solid var(--border-subtle)',
                 marginBottom: '1.5rem',
                 display: 'flex',
@@ -1011,12 +1007,12 @@ export const BusinessOwnerDashboard = () => {
               }}
             >
               <div>
-                <div style={{ fontWeight: 700, color: '#FFF' }}>{payModalPlan} Plan ({billingCycle})</div>
+                <div style={{ fontWeight: 700, color: 'var(--text-primary)' }}>{payModalPlan} Plan ({billingCycle})</div>
                 <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
                   Adds {billingCycle === 'yearly' ? '365 days' : '30 days'} of automated queuing
                 </div>
               </div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.6rem', fontWeight: 800, color: '#FBBF24' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.6rem', fontWeight: 800, color: '#A84E2E' }}>
                 ${plans.find((p) => p.id === payModalPlan)?.[billingCycle === 'yearly' ? 'yearlyPrice' : 'monthlyPrice']}
               </div>
             </div>
@@ -1027,7 +1023,7 @@ export const BusinessOwnerDashboard = () => {
                 <label className="form-label" style={{ marginBottom: '0.5rem', display: 'block' }}>
                   Payment Method:
                 </label>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+                <div className="resp-grid cols-2" style={{ gap: '0.75rem' }}>
                   <button
                     type="button"
                     onClick={() => setPaymentMethod('Card')}
@@ -1075,7 +1071,7 @@ export const BusinessOwnerDashboard = () => {
                     />
                   </div>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                  <div className="resp-grid cols-2" style={{ gap: '1rem' }}>
                     <div className="form-group">
                       <label className="form-label">Expiry (MM/YY)</label>
                       <input

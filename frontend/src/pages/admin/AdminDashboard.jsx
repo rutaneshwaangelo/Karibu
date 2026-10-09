@@ -164,9 +164,9 @@ export const AdminDashboard = () => {
               src="/karibu-logo.png"
               alt=""
               aria-hidden="true"
-              style={{ width: '22px', height: '22px', objectFit: 'contain', mixBlendMode: 'screen' }}
+              style={{ width: '22px', height: '22px', objectFit: 'contain' }}
             />
-            <span style={{ fontSize: '0.8rem', color: '#A78BFA', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>
+            <span style={{ fontSize: '0.8rem', color: '#8A6FA8', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>
               KARIBU SYSTEM ADMIN
             </span>
           </div>
@@ -188,9 +188,9 @@ export const AdminDashboard = () => {
           style={{
             padding: '0.75rem 1rem',
             borderRadius: 'var(--radius-md)',
-            background: 'rgba(16, 185, 129, 0.15)',
-            border: '1px solid rgba(16, 185, 129, 0.3)',
-            color: '#34D399',
+            background: 'rgba(76, 140, 106, 0.1)',
+            border: '1px solid rgba(76, 140, 106, 0.3)',
+            color: '#356B4E',
             marginBottom: '1.5rem',
           }}
         >
@@ -249,17 +249,17 @@ export const AdminDashboard = () => {
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
                 Total Businesses
               </div>
-              <div style={{ fontSize: '2.2rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#FBBF24', margin: '0.3rem 0' }}>
+              <div style={{ fontSize: '2.2rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#A84E2E', margin: '0.3rem 0' }}>
                 {kpis?.totalBusinesses || 0}
               </div>
-              <div style={{ fontSize: '0.75rem', color: '#34D399' }}>{kpis?.activeBusinesses || 0} currently active</div>
+              <div style={{ fontSize: '0.75rem', color: '#356B4E' }}>{kpis?.activeBusinesses || 0} currently active</div>
             </div>
 
             <div className="glass-card">
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
                 Total Users
               </div>
-              <div style={{ fontSize: '2.2rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#A78BFA', margin: '0.3rem 0' }}>
+              <div style={{ fontSize: '2.2rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#8A6FA8', margin: '0.3rem 0' }}>
                 {kpis?.totalUsers || 0}
               </div>
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Owners & Staff</div>
@@ -269,7 +269,7 @@ export const AdminDashboard = () => {
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
                 Queues Today
               </div>
-              <div style={{ fontSize: '2.2rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#38BDF8', margin: '0.3rem 0' }}>
+              <div style={{ fontSize: '2.2rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#35597B', margin: '0.3rem 0' }}>
                 {kpis?.queuesToday || 0}
               </div>
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{kpis?.activeServingCount || 0} currently serving</div>
@@ -279,7 +279,7 @@ export const AdminDashboard = () => {
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
                 Active Categories
               </div>
-              <div style={{ fontSize: '2.2rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#34D399', margin: '0.3rem 0' }}>
+              <div style={{ fontSize: '2.2rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#356B4E', margin: '0.3rem 0' }}>
                 {kpis?.totalCategories || 0}
               </div>
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Classifications</div>
@@ -294,7 +294,7 @@ export const AdminDashboard = () => {
                 No active queues at the moment.
               </div>
             ) : (
-              <div style={{ overflowX: 'auto' }}>
+              <div className="table-scroll">
                 <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                   <thead>
                     <tr style={{ borderBottom: '1px solid var(--border-subtle)', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
@@ -308,9 +308,9 @@ export const AdminDashboard = () => {
                   </thead>
                   <tbody>
                     {queues.map((q) => (
-                      <tr key={q._id} style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.04)', fontSize: '0.9rem' }}>
-                        <td style={{ padding: '0.75rem 1rem', fontWeight: 600, color: '#FFF' }}>{q.businessId?.name}</td>
-                        <td style={{ padding: '0.75rem 1rem', fontFamily: 'var(--font-mono)', color: '#FBBF24', fontWeight: 700 }}>
+                      <tr key={q._id} style={{ borderBottom: '1px solid rgba(43, 35, 32, 0.06)', fontSize: '0.9rem' }}>
+                        <td style={{ padding: '0.75rem 1rem', fontWeight: 600, color: 'var(--text-primary)' }}>{q.businessId?.name}</td>
+                        <td style={{ padding: '0.75rem 1rem', fontFamily: 'var(--font-mono)', color: '#A84E2E', fontWeight: 700 }}>
                           {q.queueNumber}
                         </td>
                         <td style={{ padding: '0.75rem 1rem' }}>{q.customerId?.name}</td>
@@ -341,7 +341,7 @@ export const AdminDashboard = () => {
             </button>
           </div>
 
-          <div style={{ overflowX: 'auto' }}>
+          <div className="table-scroll">
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
               <thead>
                 <tr style={{ borderBottom: '1px solid var(--border-subtle)', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
@@ -355,9 +355,9 @@ export const AdminDashboard = () => {
               </thead>
               <tbody>
                 {businesses.map((b) => (
-                  <tr key={b._id} style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.04)', fontSize: '0.9rem' }}>
-                    <td style={{ padding: '0.85rem 1rem', fontWeight: 600, color: '#FFF' }}>{b.name}</td>
-                    <td style={{ padding: '0.85rem 1rem', color: '#60A5FA' }}>{b.categoryId?.name || '—'}</td>
+                  <tr key={b._id} style={{ borderBottom: '1px solid rgba(43, 35, 32, 0.06)', fontSize: '0.9rem' }}>
+                    <td style={{ padding: '0.85rem 1rem', fontWeight: 600, color: 'var(--text-primary)' }}>{b.name}</td>
+                    <td style={{ padding: '0.85rem 1rem', color: '#35597B' }}>{b.categoryId?.name || '—'}</td>
                     <td style={{ padding: '0.85rem 1rem' }}>
                       <div>{b.ownerId?.name || '—'}</div>
                       <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{b.ownerId?.email}</div>
@@ -371,9 +371,9 @@ export const AdminDashboard = () => {
                           fontFamily: 'var(--font-mono)',
                           padding: '0.2rem 0.5rem',
                           borderRadius: 'var(--radius-full)',
-                          background: b.status === 'ACTIVE' ? 'rgba(16, 185, 129, 0.12)' : 'rgba(244, 63, 94, 0.12)',
-                          color: b.status === 'ACTIVE' ? '#34D399' : '#FB7185',
-                          border: `1px solid ${b.status === 'ACTIVE' ? 'rgba(16, 185, 129, 0.3)' : 'rgba(244, 63, 94, 0.3)'}`,
+                          background: b.status === 'ACTIVE' ? 'rgba(76, 140, 106, 0.1)' : 'rgba(194, 94, 88, 0.1)',
+                          color: b.status === 'ACTIVE' ? '#356B4E' : '#A33D38',
+                          border: `1px solid ${b.status === 'ACTIVE' ? 'rgba(76, 140, 106, 0.3)' : 'rgba(194, 94, 88, 0.3)'}`,
                         }}
                       >
                         {b.status}
@@ -393,7 +393,7 @@ export const AdminDashboard = () => {
           {/* Add Category Form */}
           <div className="glass-card" style={{ marginBottom: '2rem' }}>
             <h3 style={{ fontSize: '1.15rem', marginBottom: '1rem' }}>Add Business Category</h3>
-            <form onSubmit={handleAddCategory} style={{ display: 'grid', gridTemplateColumns: '1.5fr 3fr auto', gap: '1rem', alignItems: 'flex-end' }}>
+            <form onSubmit={handleAddCategory} className="resp-grid cols-form" style={{ gap: '1rem', alignItems: 'flex-end' }}>
               <div className="form-group" style={{ marginBottom: 0 }}>
                 <label className="form-label">Category Name</label>
                 <input
@@ -426,18 +426,18 @@ export const AdminDashboard = () => {
           {/* Categories List */}
           <div className="glass-card">
             <h3 style={{ fontSize: '1.15rem', marginBottom: '1.25rem' }}>Active Categories ({categories.length})</h3>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))', gap: '1rem' }}>
               {categories.map((cat) => (
                 <div
                   key={cat._id}
                   style={{
                     padding: '1.25rem',
                     borderRadius: 'var(--radius-md)',
-                    background: 'rgba(255, 255, 255, 0.03)',
+                    background: 'var(--bg-secondary)',
                     border: '1px solid var(--border-subtle)',
                   }}
                 >
-                  <h4 style={{ fontSize: '1.1rem', color: '#FFF', marginBottom: '0.35rem' }}>{cat.name}</h4>
+                  <h4 style={{ fontSize: '1.1rem', color: 'var(--text-primary)', marginBottom: '0.35rem' }}>{cat.name}</h4>
                   <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{cat.description || 'No description'}</p>
                 </div>
               ))}
@@ -450,7 +450,7 @@ export const AdminDashboard = () => {
       {activeTab === 'users' && (
         <div className="glass-card">
           <h3 style={{ fontSize: '1.2rem', marginBottom: '1.25rem' }}>Registered Users ({users.length})</h3>
-          <div style={{ overflowX: 'auto' }}>
+          <div className="table-scroll">
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
               <thead>
                 <tr style={{ borderBottom: '1px solid var(--border-subtle)', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
@@ -464,8 +464,8 @@ export const AdminDashboard = () => {
               </thead>
               <tbody>
                 {users.map((u) => (
-                  <tr key={u._id} style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.04)', fontSize: '0.9rem' }}>
-                    <td style={{ padding: '0.85rem 1rem', fontWeight: 600, color: '#FFF' }}>{u.name}</td>
+                  <tr key={u._id} style={{ borderBottom: '1px solid rgba(43, 35, 32, 0.06)', fontSize: '0.9rem' }}>
+                    <td style={{ padding: '0.85rem 1rem', fontWeight: 600, color: 'var(--text-primary)' }}>{u.name}</td>
                     <td style={{ padding: '0.85rem 1rem', color: 'var(--text-secondary)' }}>{u.email}</td>
                     <td style={{ padding: '0.85rem 1rem' }}>
                       <span
@@ -476,16 +476,16 @@ export const AdminDashboard = () => {
                           borderRadius: 'var(--radius-sm)',
                           background:
                             u.role === 'ADMIN'
-                              ? 'rgba(139, 92, 246, 0.15)'
+                              ? 'rgba(138, 111, 168, 0.12)'
                               : u.role === 'BUSINESS_OWNER'
-                              ? 'rgba(245, 158, 11, 0.15)'
-                              : 'rgba(16, 185, 129, 0.15)',
+                              ? 'rgba(194, 94, 58, 0.1)'
+                              : 'rgba(76, 140, 106, 0.1)',
                           color:
                             u.role === 'ADMIN'
-                              ? '#A78BFA'
+                              ? '#8A6FA8'
                               : u.role === 'BUSINESS_OWNER'
-                              ? '#FBBF24'
-                              : '#34D399',
+                              ? '#A84E2E'
+                              : '#356B4E',
                         }}
                       >
                         {u.role}
@@ -495,7 +495,7 @@ export const AdminDashboard = () => {
                       {u.businessId?.name || (u.role === 'ADMIN' ? 'Platform Wide' : '—')}
                     </td>
                     <td style={{ padding: '0.85rem 1rem' }}>
-                      <span style={{ fontSize: '0.75rem', color: u.active ? '#34D399' : '#FB7185' }}>
+                      <span style={{ fontSize: '0.75rem', color: u.active ? '#356B4E' : '#A33D38' }}>
                         {u.active ? 'Active' : 'Inactive'}
                       </span>
                     </td>
@@ -522,7 +522,7 @@ export const AdminDashboard = () => {
       {activeTab === 'queues' && (
         <div className="glass-card">
           <h3 style={{ fontSize: '1.2rem', marginBottom: '1.25rem' }}>Platform-Wide Active Queues</h3>
-          <div style={{ overflowX: 'auto' }}>
+          <div className="table-scroll">
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
               <thead>
                 <tr style={{ borderBottom: '1px solid var(--border-subtle)', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
@@ -535,9 +535,9 @@ export const AdminDashboard = () => {
               </thead>
               <tbody>
                 {queues.map((q) => (
-                  <tr key={q._id} style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.04)', fontSize: '0.9rem' }}>
-                    <td style={{ padding: '0.85rem 1rem', fontWeight: 600, color: '#FFF' }}>{q.businessId?.name}</td>
-                    <td style={{ padding: '0.85rem 1rem', fontFamily: 'var(--font-mono)', fontWeight: 700, color: '#FBBF24' }}>
+                  <tr key={q._id} style={{ borderBottom: '1px solid rgba(43, 35, 32, 0.06)', fontSize: '0.9rem' }}>
+                    <td style={{ padding: '0.85rem 1rem', fontWeight: 600, color: 'var(--text-primary)' }}>{q.businessId?.name}</td>
+                    <td style={{ padding: '0.85rem 1rem', fontFamily: 'var(--font-mono)', fontWeight: 700, color: '#A84E2E' }}>
                       {q.queueNumber}
                     </td>
                     <td style={{ padding: '0.85rem 1rem' }}>{q.customerId?.name}</td>
@@ -561,7 +561,7 @@ export const AdminDashboard = () => {
       {activeTab === 'subscriptions' && (
         <div className="glass-card">
           <h3 style={{ fontSize: '1.2rem', marginBottom: '1.25rem' }}>Business Subscriptions</h3>
-          <div style={{ overflowX: 'auto' }}>
+          <div className="table-scroll">
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
               <thead>
                 <tr style={{ borderBottom: '1px solid var(--border-subtle)', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
@@ -574,20 +574,20 @@ export const AdminDashboard = () => {
               </thead>
               <tbody>
                 {subscriptions.map((sub) => (
-                  <tr key={sub._id} style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.04)', fontSize: '0.9rem' }}>
-                    <td style={{ padding: '0.85rem 1rem', fontWeight: 600, color: '#FFF' }}>{sub.businessId?.name}</td>
-                    <td style={{ padding: '0.85rem 1rem', fontFamily: 'var(--font-mono)', color: '#FBBF24', fontWeight: 700 }}>
+                  <tr key={sub._id} style={{ borderBottom: '1px solid rgba(43, 35, 32, 0.06)', fontSize: '0.9rem' }}>
+                    <td style={{ padding: '0.85rem 1rem', fontWeight: 600, color: 'var(--text-primary)' }}>{sub.businessId?.name}</td>
+                    <td style={{ padding: '0.85rem 1rem', fontFamily: 'var(--font-mono)', color: '#A84E2E', fontWeight: 700 }}>
                       {sub.plan}
                     </td>
                     <td style={{ padding: '0.85rem 1rem' }}>
-                      <span style={{ fontSize: '0.75rem', color: sub.status === 'ACTIVE' ? '#34D399' : '#FB7185' }}>
+                      <span style={{ fontSize: '0.75rem', color: sub.status === 'ACTIVE' ? '#356B4E' : '#A33D38' }}>
                         {sub.status}
                       </span>
                     </td>
                     <td style={{ padding: '0.85rem 1rem', color: 'var(--text-muted)' }}>
                       {new Date(sub.startDate).toLocaleDateString()}
                     </td>
-                    <td style={{ padding: '0.85rem 1rem', color: '#FFF' }}>
+                    <td style={{ padding: '0.85rem 1rem', color: 'var(--text-primary)' }}>
                       {new Date(sub.endDate).toLocaleDateString()}
                     </td>
                   </tr>
@@ -602,24 +602,24 @@ export const AdminDashboard = () => {
       {activeTab === 'reports' && (
         <div className="glass-card">
           <h3 style={{ fontSize: '1.2rem', marginBottom: '1.25rem' }}>Platform Queue Analytics</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.25rem', marginBottom: '2rem' }}>
-            <div style={{ padding: '1.25rem', borderRadius: 'var(--radius-md)', background: 'rgba(255, 255, 255, 0.03)' }}>
+          <div className="resp-grid cols-3" style={{ marginBottom: '2rem' }}>
+            <div style={{ padding: '1.25rem', borderRadius: 'var(--radius-md)', background: 'var(--bg-secondary)' }}>
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Total Customers Served</div>
-              <div style={{ fontSize: '2rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#34D399', margin: '0.4rem 0' }}>
+              <div style={{ fontSize: '2rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#356B4E', margin: '0.4rem 0' }}>
                 {reports?.totalQueuesServed || 0}
               </div>
             </div>
 
-            <div style={{ padding: '1.25rem', borderRadius: 'var(--radius-md)', background: 'rgba(255, 255, 255, 0.03)' }}>
+            <div style={{ padding: '1.25rem', borderRadius: 'var(--radius-md)', background: 'var(--bg-secondary)' }}>
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Waiting Volume</div>
-              <div style={{ fontSize: '2rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#38BDF8', margin: '0.4rem 0' }}>
+              <div style={{ fontSize: '2rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#35597B', margin: '0.4rem 0' }}>
                 {reports?.totalQueuesWaiting || 0}
               </div>
             </div>
 
-            <div style={{ padding: '1.25rem', borderRadius: 'var(--radius-md)', background: 'rgba(255, 255, 255, 0.03)' }}>
+            <div style={{ padding: '1.25rem', borderRadius: 'var(--radius-md)', background: 'var(--bg-secondary)' }}>
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Cancelled / Left</div>
-              <div style={{ fontSize: '2rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#FB7185', margin: '0.4rem 0' }}>
+              <div style={{ fontSize: '2rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#A33D38', margin: '0.4rem 0' }}>
                 {reports?.totalCancelled || 0}
               </div>
             </div>
@@ -633,25 +633,23 @@ export const AdminDashboard = () => {
           style={{
             position: 'fixed',
             inset: 0,
-            backgroundColor: 'rgba(9, 13, 22, 0.85)',
+            backgroundColor: 'rgba(43, 35, 32, 0.35)',
             backdropFilter: 'blur(10px)',
             zIndex: 1000,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: '1.5rem',
+            padding: '1rem',
           }}
           onClick={() => setShowRegModal(false)}
         >
           <div
-            className="glass-card"
+            className="glass-card modal-panel"
             style={{
-              width: '100%',
-              maxWidth: '600px',
-              background: '#0F172A',
-              borderColor: 'rgba(255, 255, 255, 0.12)',
+              '--panel-width': '600px',
+              background: 'var(--bg-card)',
+              borderColor: 'var(--border-subtle)',
               position: 'relative',
-              maxHeight: '90vh',
               overflowY: 'auto',
             }}
             onClick={(e) => e.stopPropagation()}
@@ -681,9 +679,9 @@ export const AdminDashboard = () => {
                 style={{
                   padding: '0.75rem 1rem',
                   borderRadius: 'var(--radius-md)',
-                  background: 'rgba(244, 63, 94, 0.15)',
-                  border: '1px solid rgba(244, 63, 94, 0.3)',
-                  color: '#FB7185',
+                  background: 'rgba(194, 94, 88, 0.1)',
+                  border: '1px solid rgba(194, 94, 88, 0.3)',
+                  color: '#A33D38',
                   fontSize: '0.85rem',
                   marginBottom: '1.25rem',
                 }}
@@ -693,7 +691,7 @@ export const AdminDashboard = () => {
             )}
 
             <form onSubmit={handleRegisterBusiness}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '1rem' }}>
+              <div className="resp-grid cols-2-1">
                 <div className="form-group">
                   <label className="form-label">Business Name</label>
                   <input
@@ -714,7 +712,7 @@ export const AdminDashboard = () => {
                     onChange={(e) => setNewBiz({ ...newBiz, categoryId: e.target.value })}
                   >
                     {categories.map((c) => (
-                      <option key={c._id} value={c._id} style={{ background: '#0F172A', color: '#FFF' }}>
+                      <option key={c._id} value={c._id}>
                         {c.name}
                       </option>
                     ))}
@@ -722,7 +720,7 @@ export const AdminDashboard = () => {
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div className="resp-grid cols-2">
                 <div className="form-group">
                   <label className="form-label">Owner Full Name</label>
                   <input
@@ -748,7 +746,7 @@ export const AdminDashboard = () => {
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div className="resp-grid cols-2">
                 <div className="form-group">
                   <label className="form-label">Initial Owner Password</label>
                   <input
@@ -773,7 +771,7 @@ export const AdminDashboard = () => {
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: '1rem' }}>
+              <div className="resp-grid cols-1-2">
                 <div className="form-group">
                   <label className="form-label">City / Location</label>
                   <input

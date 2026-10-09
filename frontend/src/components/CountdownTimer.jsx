@@ -47,16 +47,16 @@ export const CountdownTimer = ({ expectedEndAt, onExpire }) => {
         padding: '0.6rem 1.25rem',
         borderRadius: 'var(--radius-md)',
         background: isFinished
-          ? 'rgba(59, 130, 246, 0.12)'
+          ? 'rgba(74, 123, 166, 0.12)'
           : isUrgent
-          ? 'rgba(245, 158, 11, 0.15)'
-          : 'rgba(16, 185, 129, 0.12)',
+          ? 'rgba(191, 132, 37, 0.14)'
+          : 'rgba(76, 140, 106, 0.12)',
         border: `1px solid ${
           isFinished
-            ? 'rgba(59, 130, 246, 0.3)'
+            ? 'rgba(74, 123, 166, 0.35)'
             : isUrgent
-            ? 'rgba(245, 158, 11, 0.4)'
-            : 'rgba(16, 185, 129, 0.3)'
+            ? 'rgba(191, 132, 37, 0.4)'
+            : 'rgba(76, 140, 106, 0.35)'
         }`,
       }}
     >
@@ -64,10 +64,10 @@ export const CountdownTimer = ({ expectedEndAt, onExpire }) => {
         size={18}
         color={
           isFinished
-            ? '#60A5FA'
+            ? '#35597B'
             : isUrgent
-            ? '#FBBF24'
-            : '#34D399'
+            ? '#96660F'
+            : '#356B4E'
         }
       />
       <span
@@ -77,10 +77,10 @@ export const CountdownTimer = ({ expectedEndAt, onExpire }) => {
           fontWeight: 700,
           letterSpacing: '0.05em',
           color: isFinished
-            ? '#60A5FA'
+            ? '#35597B'
             : isUrgent
-            ? '#FBBF24'
-            : '#34D399',
+            ? '#96660F'
+            : '#356B4E',
         }}
       >
         {isFinished ? 'Completing...' : formatted}

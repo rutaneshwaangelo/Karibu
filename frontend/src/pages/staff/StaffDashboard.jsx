@@ -118,9 +118,9 @@ export const StaffDashboard = () => {
                 fontSize: '0.75rem',
                 padding: '0.2rem 0.6rem',
                 borderRadius: 'var(--radius-full)',
-                background: 'rgba(16, 185, 129, 0.12)',
-                color: '#34D399',
-                border: '1px solid rgba(16, 185, 129, 0.3)',
+                background: 'rgba(76, 140, 106, 0.1)',
+                color: '#356B4E',
+                border: '1px solid rgba(76, 140, 106, 0.3)',
                 fontWeight: 700,
               }}
             >
@@ -147,7 +147,7 @@ export const StaffDashboard = () => {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'minmax(340px, 1.4fr) minmax(300px, 1fr)',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(340px, 100%), 1fr))',
           gap: '1.5rem',
           marginBottom: '2rem',
         }}
@@ -157,12 +157,9 @@ export const StaffDashboard = () => {
           className="glass-card"
           style={{
             borderColor: current
-              ? 'rgba(16, 185, 129, 0.4)'
-              : 'rgba(255, 255, 255, 0.08)',
-            background: current
-              ? 'rgba(15, 23, 42, 0.85)'
-              : 'rgba(15, 23, 42, 0.6)',
-            boxShadow: current ? '0 0 30px rgba(16, 185, 129, 0.15)' : 'none',
+              ? 'rgba(76, 140, 106, 0.45)'
+              : 'var(--border-subtle)',
+            boxShadow: current ? 'var(--shadow-md)' : 'none',
           }}
         >
           <div
@@ -179,11 +176,11 @@ export const StaffDashboard = () => {
                   width: 10,
                   height: 10,
                   borderRadius: '50%',
-                  background: current ? '#10B981' : '#64748B',
+                  background: current ? '#4C8C6A' : '#9A8D83',
                   animation: current ? 'pulse-dot 1.5s infinite' : 'none',
                 }}
               />
-              <span style={{ fontWeight: 700, fontSize: '0.9rem', letterSpacing: '0.04em', textTransform: 'uppercase', color: current ? '#34D399' : 'var(--text-muted)' }}>
+              <span style={{ fontWeight: 700, fontSize: '0.9rem', letterSpacing: '0.04em', textTransform: 'uppercase', color: current ? '#356B4E' : 'var(--text-muted)' }}>
                 {current ? 'Currently Serving' : 'Service Desk Idle'}
               </span>
             </div>
@@ -206,7 +203,7 @@ export const StaffDashboard = () => {
                   <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
                     Customer Name
                   </div>
-                  <h2 style={{ fontSize: '1.6rem', marginTop: '0.1rem', color: '#FFF' }}>
+                  <h2 style={{ fontSize: '1.6rem', marginTop: '0.1rem', color: 'var(--text-primary)' }}>
                     {current.customerId?.name || 'Walk-in Guest'}
                   </h2>
                   {current.customerId?.phone && (
@@ -224,8 +221,8 @@ export const StaffDashboard = () => {
                     style={{
                       fontFamily: 'var(--font-mono)',
                       fontSize: '2.2rem',
-                      fontWeight: 800,
-                      color: '#FBBF24',
+                      fontWeight: 600,
+                      color: '#A84E2E',
                     }}
                   >
                     {current.queueNumber}
@@ -239,7 +236,7 @@ export const StaffDashboard = () => {
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  background: 'rgba(255, 255, 255, 0.03)',
+                  background: 'var(--bg-secondary)',
                   padding: '1rem',
                   borderRadius: 'var(--radius-md)',
                   border: '1px solid var(--border-subtle)',
@@ -252,13 +249,13 @@ export const StaffDashboard = () => {
                   <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
                     Assigned Service
                   </div>
-                  <div style={{ fontWeight: 700, fontSize: '1.05rem', color: '#FFF' }}>
+                  <div style={{ fontWeight: 700, fontSize: '1.05rem', color: 'var(--text-primary)' }}>
                     {current.serviceId?.name}
                   </div>
-                  <div style={{ fontSize: '0.8rem', color: '#FBBF24', fontFamily: 'var(--font-mono)' }}>
+                  <div style={{ fontSize: '0.8rem', color: '#A84E2E', fontFamily: 'var(--font-mono)' }}>
                     Base: {current.serviceId?.durationMinutes} min
                     {current.extensionMinutes !== 0 && (
-                      <span style={{ marginLeft: '0.4rem', color: '#38BDF8' }}>
+                      <span style={{ marginLeft: '0.4rem', color: '#35597B' }}>
                         (Adjusted: {current.extensionMinutes > 0 ? `+${current.extensionMinutes}` : current.extensionMinutes}m)
                       </span>
                     )}
@@ -286,9 +283,9 @@ export const StaffDashboard = () => {
                   style={{
                     padding: '0.65rem 0.85rem',
                     borderRadius: 'var(--radius-md)',
-                    background: 'rgba(16, 185, 129, 0.12)',
-                    border: '1px solid rgba(16, 185, 129, 0.3)',
-                    color: '#34D399',
+                    background: 'rgba(76, 140, 106, 0.1)',
+                    border: '1px solid rgba(76, 140, 106, 0.3)',
+                    color: '#356B4E',
                     fontSize: '0.8rem',
                     marginBottom: '1rem',
                   }}
@@ -308,7 +305,7 @@ export const StaffDashboard = () => {
                   paddingTop: '0.85rem',
                 }}
               >
-                <Sparkles size={13} color="#FBBF24" />
+                <Sparkles size={13} color="#A84E2E" />
                 <span>
                   Automatic Queue Engine is active. Service finishes and advances to next customer automatically when timer reaches zero.
                 </span>
@@ -340,8 +337,8 @@ export const StaffDashboard = () => {
               style={{
                 fontFamily: 'var(--font-mono)',
                 fontSize: '0.75rem',
-                color: '#FBBF24',
-                background: 'rgba(245, 158, 11, 0.12)',
+                color: '#A84E2E',
+                background: 'rgba(194, 94, 58, 0.08)',
                 padding: '0.2rem 0.6rem',
                 borderRadius: 'var(--radius-full)',
               }}
@@ -355,8 +352,8 @@ export const StaffDashboard = () => {
               style={{
                 padding: '1.25rem',
                 borderRadius: 'var(--radius-md)',
-                background: 'rgba(245, 158, 11, 0.06)',
-                border: '1px solid rgba(245, 158, 11, 0.25)',
+                background: 'rgba(194, 94, 58, 0.05)',
+                border: '1px solid rgba(194, 94, 58, 0.2)',
                 marginBottom: '1rem',
               }}
             >
@@ -366,13 +363,13 @@ export const StaffDashboard = () => {
                     style={{
                       fontFamily: 'var(--font-mono)',
                       fontSize: '1.6rem',
-                      fontWeight: 800,
-                      color: '#FBBF24',
+                      fontWeight: 600,
+                      color: '#A84E2E',
                     }}
                   >
                     {nextCustomer.queueNumber}
                   </div>
-                  <div style={{ fontWeight: 700, fontSize: '1.1rem', color: '#FFF' }}>
+                  <div style={{ fontWeight: 700, fontSize: '1.1rem', color: 'var(--text-primary)' }}>
                     {nextCustomer.customerId?.name}
                   </div>
                   <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
@@ -388,7 +385,7 @@ export const StaffDashboard = () => {
                     style={{
                       fontFamily: 'var(--font-mono)',
                       fontWeight: 700,
-                      color: '#38BDF8',
+                      color: '#35597B',
                       fontSize: '1.2rem',
                     }}
                   >
@@ -412,12 +409,11 @@ export const StaffDashboard = () => {
 
           {/* Quick Metrics */}
           <div
+            className="resp-grid cols-2"
             style={{
               marginTop: 'auto',
               borderTop: '1px solid var(--border-subtle)',
               paddingTop: '1rem',
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
               gap: '0.75rem',
             }}
           >
@@ -425,11 +421,11 @@ export const StaffDashboard = () => {
               style={{
                 padding: '0.75rem',
                 borderRadius: 'var(--radius-md)',
-                background: 'rgba(255, 255, 255, 0.02)',
+                background: 'var(--bg-secondary)',
               }}
             >
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Waiting Now</div>
-              <div style={{ fontSize: '1.3rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#FFF' }}>
+              <div style={{ fontSize: '1.3rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'var(--text-primary)' }}>
                 {queueData.totalWaiting}
               </div>
             </div>
@@ -437,11 +433,11 @@ export const StaffDashboard = () => {
               style={{
                 padding: '0.75rem',
                 borderRadius: 'var(--radius-md)',
-                background: 'rgba(255, 255, 255, 0.02)',
+                background: 'var(--bg-secondary)',
               }}
             >
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Served Today</div>
-              <div style={{ fontSize: '1.3rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#34D399' }}>
+              <div style={{ fontSize: '1.3rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#356B4E' }}>
                 {queueData.recentlyCompleted.length}
               </div>
             </div>
@@ -460,7 +456,7 @@ export const StaffDashboard = () => {
             The waiting queue is currently clear.
           </div>
         ) : (
-          <div style={{ overflowX: 'auto' }}>
+          <div className="table-scroll">
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
               <thead>
                 <tr style={{ borderBottom: '1px solid var(--border-subtle)', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
@@ -478,23 +474,23 @@ export const StaffDashboard = () => {
                   <tr
                     key={entry._id}
                     style={{
-                      borderBottom: '1px solid rgba(255, 255, 255, 0.04)',
+                      borderBottom: '1px solid rgba(43, 35, 32, 0.06)',
                       fontSize: '0.9rem',
                     }}
                   >
-                    <td style={{ padding: '0.85rem 1rem', fontFamily: 'var(--font-mono)', color: '#FBBF24' }}>
+                    <td style={{ padding: '0.85rem 1rem', fontFamily: 'var(--font-mono)', color: '#A84E2E' }}>
                       #{index + 1}
                     </td>
                     <td style={{ padding: '0.85rem 1rem', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>
                       {entry.queueNumber}
                     </td>
-                    <td style={{ padding: '0.85rem 1rem', fontWeight: 600, color: '#FFF' }}>
+                    <td style={{ padding: '0.85rem 1rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                       {entry.customerId?.name || 'Guest'}
                     </td>
                     <td style={{ padding: '0.85rem 1rem', color: 'var(--text-secondary)' }}>
                       {entry.serviceId?.name} ({entry.serviceId?.durationMinutes}m)
                     </td>
-                    <td style={{ padding: '0.85rem 1rem', fontFamily: 'var(--font-mono)', color: '#38BDF8' }}>
+                    <td style={{ padding: '0.85rem 1rem', fontFamily: 'var(--font-mono)', color: '#35597B' }}>
                       ~{entry.estimatedWaitMinutes}m
                     </td>
                     <td style={{ padding: '0.85rem 1rem', fontSize: '0.8rem', color: 'var(--text-muted)' }}>

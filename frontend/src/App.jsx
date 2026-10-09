@@ -62,26 +62,35 @@ function KaribuApp() {
 
       {/* Clean Modern Footer */}
       <footer
+        className="app-footer"
         style={{
           borderTop: '1px solid var(--border-subtle)',
-          padding: '2rem 1.5rem',
+          padding: '2rem 1.5rem 2rem',
           textAlign: 'center',
           color: 'var(--text-muted)',
           fontSize: '0.85rem',
-          backgroundColor: 'rgba(9, 13, 22, 0.95)',
+          backgroundColor: 'var(--bg-secondary)',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem', marginBottom: '0.4rem' }}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+            gap: '0.4rem',
+            marginBottom: '0.4rem',
+          }}
+        >
           <img
             src="/karibu-logo.png"
             alt=""
             aria-hidden="true"
-            style={{ width: '26px', height: '26px', objectFit: 'contain', mixBlendMode: 'screen', verticalAlign: 'middle' }}
+            style={{ width: '26px', height: '26px', objectFit: 'contain', verticalAlign: 'middle' }}
           />
           <span>KARIBU Smart Queue System</span>
-          <span>•</span>
+          <span aria-hidden="true">•</span>
           <span>Pick your place before you arrive</span>
-          
         </div>
         <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
           All new businesses receive a 1-Month Free Trial. Upgrade anytime to keep serving seamlessly.

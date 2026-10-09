@@ -42,7 +42,7 @@ export const CustomerHome = ({ onSelectBusiness }) => {
       <section
         style={{
           textAlign: 'center',
-          padding: '3.5rem 1rem 2.5rem',
+          padding: 'clamp(2rem, 6vw, 3.5rem) 0 2rem',
           maxWidth: '780px',
           margin: '0 auto',
         }}
@@ -54,16 +54,15 @@ export const CustomerHome = ({ onSelectBusiness }) => {
             fontSize: 'clamp(2.2rem, 5vw, 3.4rem)',
             fontWeight: 800,
             lineHeight: 1.15,
-            letterSpacing: '-0.03em',
+            letterSpacing: '-0.02em',
             marginBottom: '1.25rem',
+            fontFamily: 'var(--font-display)',
           }}
         >
           Pick your place{' '}
           <span
             style={{
-              background: 'linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
+              color: '#C25E3A',
             }}
           >
             before you arrive.
@@ -86,11 +85,11 @@ export const CustomerHome = ({ onSelectBusiness }) => {
           style={{
             display: 'flex',
             alignItems: 'center',
-            background: 'rgba(15, 23, 42, 0.85)',
-            border: '1px solid var(--border-subtle)',
+            background: 'var(--bg-card)',
+            border: '1px solid rgba(43, 35, 32, 0.16)',
             borderRadius: 'var(--radius-xl)',
             padding: '0.5rem 0.6rem 0.5rem 1.25rem',
-            boxShadow: 'var(--shadow-lg)',
+            boxShadow: 'var(--shadow-md)',
             gap: '0.75rem',
           }}
         >
@@ -102,9 +101,10 @@ export const CustomerHome = ({ onSelectBusiness }) => {
             onChange={(e) => setSearchQuery(e.target.value)}
             style={{
               flex: 1,
+              minWidth: 0,
               background: 'transparent',
               border: 'none',
-              color: '#FFF',
+              color: 'var(--text-primary)',
               fontSize: '1rem',
               outline: 'none',
             }}
@@ -168,7 +168,7 @@ export const CustomerHome = ({ onSelectBusiness }) => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(min(340px, 100%), 1fr))',
             gap: '1.5rem',
           }}
         >
@@ -191,9 +191,9 @@ export const CustomerHome = ({ onSelectBusiness }) => {
                       fontFamily: 'var(--font-mono)',
                       padding: '0.2rem 0.6rem',
                       borderRadius: 'var(--radius-full)',
-                      background: 'rgba(59, 130, 246, 0.12)',
-                      color: '#60A5FA',
-                      border: '1px solid rgba(59, 130, 246, 0.25)',
+                      background: 'rgba(74, 123, 166, 0.1)',
+                      color: '#35597B',
+                      border: '1px solid rgba(74, 123, 166, 0.25)',
                       fontWeight: 600,
                     }}
                   >
@@ -202,14 +202,14 @@ export const CustomerHome = ({ onSelectBusiness }) => {
                   <span
                     style={{
                       fontSize: '0.75rem',
-                      color: '#34D399',
+                      color: '#4C8C6A',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '0.3rem',
                       fontWeight: 600,
                     }}
                   >
-                    <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#10B981' }} />
+                    <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#4C8C6A' }} />
                     Active Queue
                   </span>
                 </div>
@@ -244,7 +244,7 @@ export const CustomerHome = ({ onSelectBusiness }) => {
                           style={{
                             padding: '0.3rem 0.6rem',
                             borderRadius: 'var(--radius-sm)',
-                            background: 'rgba(255, 255, 255, 0.04)',
+                            background: 'var(--bg-secondary)',
                             border: '1px solid var(--border-subtle)',
                             fontSize: '0.8rem',
                             display: 'flex',
@@ -253,7 +253,7 @@ export const CustomerHome = ({ onSelectBusiness }) => {
                           }}
                         >
                           <span>{s.name}</span>
-                          <span style={{ color: '#FBBF24', fontSize: '0.75rem', fontFamily: 'var(--font-mono)' }}>
+                          <span style={{ color: '#96660F', fontSize: '0.75rem', fontFamily: 'var(--font-mono)' }}>
                             ({s.durationMinutes}m)
                           </span>
                         </div>

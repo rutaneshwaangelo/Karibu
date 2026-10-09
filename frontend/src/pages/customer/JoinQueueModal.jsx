@@ -48,26 +48,22 @@ export const JoinQueueModal = ({ business, onClose, onJoined }) => {
       style={{
         position: 'fixed',
         inset: 0,
-        backgroundColor: 'rgba(9, 13, 22, 0.85)',
+        backgroundColor: 'rgba(43, 35, 32, 0.35)',
         backdropFilter: 'blur(10px)',
         zIndex: 1000,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '1.5rem',
+        padding: '1rem',
       }}
       onClick={onClose}
     >
       <div
-        className="glass-card"
+        className="glass-card modal-panel"
         style={{
-          width: '100%',
-          maxWidth: '520px',
-          background: '#0F172A',
-          borderColor: 'rgba(255, 255, 255, 0.12)',
+          background: 'var(--bg-card)',
+          borderColor: 'var(--border-subtle)',
           position: 'relative',
-          maxHeight: '90vh',
-          overflowY: 'auto',
         }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -94,13 +90,12 @@ export const JoinQueueModal = ({ business, onClose, onJoined }) => {
               width: '42px',
               height: '42px',
               objectFit: 'contain',
-              mixBlendMode: 'screen',
               flexShrink: 0,
               marginTop: '0.1rem',
             }}
           />
           <div>
-            <div style={{ fontSize: '0.8rem', color: '#FBBF24', fontWeight: 600, textTransform: 'uppercase' }}>
+            <div style={{ fontSize: '0.8rem', color: '#A84E2E', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
               Joining Queue for
             </div>
             <h2 style={{ fontSize: '1.5rem', marginTop: '0.2rem' }}>{business.name}</h2>
@@ -115,9 +110,9 @@ export const JoinQueueModal = ({ business, onClose, onJoined }) => {
             style={{
               padding: '0.75rem 1rem',
               borderRadius: 'var(--radius-md)',
-              background: 'rgba(244, 63, 94, 0.15)',
-              border: '1px solid rgba(244, 63, 94, 0.3)',
-              color: '#FB7185',
+              background: 'rgba(194, 94, 88, 0.1)',
+              border: '1px solid rgba(194, 94, 88, 0.3)',
+              color: '#A33D38',
               fontSize: '0.85rem',
               marginBottom: '1.25rem',
             }}
@@ -147,10 +142,10 @@ export const JoinQueueModal = ({ business, onClose, onJoined }) => {
                         padding: '0.85rem 1rem',
                         borderRadius: 'var(--radius-md)',
                         background: isSelected
-                          ? 'rgba(245, 158, 11, 0.12)'
-                          : 'rgba(255, 255, 255, 0.03)',
+                          ? 'rgba(194, 94, 58, 0.08)'
+                          : 'var(--bg-secondary)',
                         border: `1px solid ${
-                          isSelected ? 'rgba(245, 158, 11, 0.45)' : 'var(--border-subtle)'
+                          isSelected ? 'rgba(194, 94, 58, 0.5)' : 'var(--border-subtle)'
                         }`,
                         cursor: 'pointer',
                         transition: 'all var(--transition-fast)',
@@ -162,18 +157,18 @@ export const JoinQueueModal = ({ business, onClose, onJoined }) => {
                             width: 18,
                             height: 18,
                             borderRadius: '50%',
-                            border: `2px solid ${isSelected ? '#F59E0B' : 'var(--text-muted)'}`,
+                            border: `2px solid ${isSelected ? '#C25E3A' : 'var(--text-muted)'}`,
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                           }}
                         >
                           {isSelected && (
-                            <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#F59E0B' }} />
+                            <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#C25E3A' }} />
                           )}
                         </div>
                         <div>
-                          <div style={{ fontWeight: 600, color: '#FFF' }}>{s.name}</div>
+                          <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{s.name}</div>
                           {s.description && (
                             <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
                               {s.description}
@@ -189,7 +184,7 @@ export const JoinQueueModal = ({ business, onClose, onJoined }) => {
                           gap: '0.35rem',
                           fontFamily: 'var(--font-mono)',
                           fontSize: '0.8rem',
-                          color: '#FBBF24',
+                          color: '#A84E2E',
                           fontWeight: 600,
                         }}
                       >

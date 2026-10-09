@@ -40,12 +40,12 @@ export const TimeAdjustCluster = ({ onAdjust, disabled }) => {
               fontFamily: 'var(--font-mono)',
               borderColor:
                 opt.type === 'plus'
-                  ? 'rgba(245, 158, 11, 0.25)'
-                  : 'rgba(59, 130, 246, 0.25)',
+                  ? 'rgba(194, 94, 58, 0.3)'
+                  : 'rgba(74, 123, 166, 0.3)',
               color:
                 opt.type === 'plus'
-                  ? '#FBBF24'
-                  : '#60A5FA',
+                  ? '#A84E2E'
+                  : '#35597B',
             }}
           >
             {loadingMinutes === opt.value ? (
