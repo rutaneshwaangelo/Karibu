@@ -30,8 +30,8 @@ export const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
   const fillCredentials = (role) => {
     setError('');
     if (role === 'ADMIN') {
-      setEmail('admin@karibu.com');
-      setPassword('Admin@Karibu2026!');
+      setEmail('admin@gmail.com');
+      setPassword('123karibu');
     } else if (role === 'OWNER') {
       setEmail('john@kibalisalon.com');
       setPassword('SalonPass2026!');
