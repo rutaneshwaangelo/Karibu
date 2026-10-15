@@ -84,6 +84,9 @@ html, body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  overflow-y: auto;
+
 }
 
 /* Typography Helpers */
@@ -323,17 +326,29 @@ html {
   scroll-behavior: smooth;
 }
 
-html, body {
-  overflow-x: hidden;
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: clip;
+  overflow-y: auto;
 }
 
 body {
-  overscroll-behavior-y: none;
+  overscroll-behavior-y: auto;
+}
+
+#root {
+  min-height: 100vh;
+  overflow: visible;
 }
 
 main {
-  -webkit-overflow-scrolling: touch;
+  min-height: auto;
+  overflow: visible;
 }
+
 
 img, video, svg {
   max-width: 100%;
