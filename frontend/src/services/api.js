@@ -1,4 +1,5 @@
-const API_BASE_URL = '/api';
+
+const API_BASE_URL = 'https://karibu-backend-0569.onrender.com/api';
 
 /**
  * Universal API request wrapper with token header injection and error normalization
