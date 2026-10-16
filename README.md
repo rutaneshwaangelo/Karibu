@@ -64,6 +64,7 @@ karibu/
 cd karibu/backend
 npm install
 npm run seed     # Seeds default Platform Admin and 5 business categories
+npm test         # Queue engine regression suite (spins up an in-memory MongoDB)
 npm run dev      # Runs Express + Socket.IO API on http://localhost:5000
 ```
 
@@ -99,6 +100,12 @@ The application includes **1-Click Demo Autofill** in the login modal for effort
 7. Click **Staff** autofill and log in.
 8. In the **Live Service Console**, observe the active customer countdown and click **+5 min** or **+10 min** to test dynamic service duration adjustment.
 9. Watch the waiting customer's estimated wait time update automatically!
+
+### Automated coverage
+
+`cd backend && npm test` runs the queue-engine regression suite (Node's built-in test runner against an in-memory MongoDB, no external database needed). It covers promotion on join, the expiry sweep, place-in-line, wait recalculations, concurrent ticks never double-promoting, tracking by name/ticket number (including input that must not leak), and the staff "complete & call next" path.
+
+The suite exists because the queue has already shipped broken once — the engine was gated out of production and tickets silently froze. A regression like that now fails `npm test` instead of a live queue.
 "# Karibu" 
 
 ---
@@ -121,7 +128,7 @@ This section documents the **Requirement, Scalability, Security, Performance and
 | R8 | Non-functional | The platform must survive spikes in concurrent queue activity without a rewrite | Stateless API, capped connection pool, indexed queries |
 | R9 | Non-functional | Credentials and tenant data must be protected against common attacks | bcrypt, JWT, helmet, rate limiting, CORS allowlist, body-size limits |
 | R10 | Non-functional | The system must remain correct on a serverless host with no long-lived process | Cached DB connection, opportunistic queue tick, secured cron |
-| R11 | Functional | A customer who lost their ticket link can find it again by name or ticket number and see their place in the line | `POST /api/customer/queue/track`, `computePlaceInLine()` |
+| R11 | Functional | A customer who lost their ticket link can find it again by name or ticket number and see their place in the line (a name is echoed back only when the search is that customer's full name) | `POST /api/customer/queue/track`, `computePlaceInLine()` |
 | R12 | Functional | Staff can finish the current service immediately and call the next customer without waiting for the timer | `completeCurrentService()`, `POST /api/staff/queue/:id/complete` |
 
 ### 2. Performance

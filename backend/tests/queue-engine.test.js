@@ -12,7 +12,7 @@
  *
  *   npm test
  */
-const { test, before, after } = require('node:test');
+const { test, before, beforeEach, after } = require('node:test');
 const assert = require('node:assert/strict');
 const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
@@ -39,6 +39,16 @@ before(async () => {
 after(async () => {
   await mongoose.connection.close();
   await mongod.stop();
+});
+
+/**
+ * Each test gets an empty database. Ticket numbers are only unique per business
+ * per day, so leftovers from a previous test would collide with the next one's
+ * K001/K003 - and a tracking test would find other tests' customers.
+ */
+beforeEach(async () => {
+  const collections = await mongoose.connection.db.collections();
+  await Promise.all(collections.map((collection) => collection.deleteMany({})));
 });
 
 /**
@@ -237,7 +247,7 @@ test('a customer can be found by name and see their place in line', async () => 
   await join(shop, 'Maya Lin');
   const waiting = await join(shop, 'Maya Lin');
 
-  const res = await call(queueController.trackQueue, { body: { query: 'Maya' } });
+  const res = await call(queueController.trackQueue, { body: { query: 'Maya Lin' } });
 
   assert.equal(res.statusCode, 200);
   assert.equal(res.payload.count, 2);
@@ -251,6 +261,49 @@ test('a customer can be found by name and see their place in line', async () => 
   assert.equal(inLine.nowServing, 'K001');
   assert.equal(inLine.totalWaiting, 1);
   assert.equal(inLine.business.name, 'Kibali Salon');
+  assert.equal(inLine.customer.name, 'Maya Lin');
+});
+
+test('a partial name still finds the ticket but does not publish the name', async () => {
+  const shop = await createShop();
+  await join(shop, 'Maya Lin');
+  const waiting = await join(shop, 'Maya Lin');
+
+  const res = await call(queueController.trackQueue, { body: { query: 'Maya' } });
+
+  assert.equal(res.payload.count, 2, 'a partial name must still locate the tickets');
+  assert.equal(res.payload.data.matches.find((m) => m.queueNumber === waiting.queueNumber).placeInLine, 2);
+  assert.ok(
+    res.payload.data.matches.every((m) => m.customer.name === null),
+    'a partial name must not reveal who is in the queue'
+  );
+});
+
+test('one business cannot read another business\'s customer names', async () => {
+  const mine = await createShop();
+  const theirs = await createShop();
+
+  await join(theirs, 'Maya Lin');
+  await join(theirs, 'Maya Lin');
+  await join(theirs, 'Yves Kamanzi');
+  const myTicket = await join(mine, 'Maya Lin');
+
+  // Same two letters would expose every matching customer across all tenants.
+  const all = await call(queueController.trackQueue, { body: { query: 'Maya' } });
+  assert.equal(all.payload.count, 3, 'all three Mayas are still found');
+  assert.ok(
+    all.payload.data.matches.every((m) => m.customer.name === null),
+    'no name is exposed for a partial search'
+  );
+
+  // Scoping narrows the lookup to one business, and a full name still resolves
+  // the customer's own ticket in full.
+  const scoped = await call(queueController.trackQueue, {
+    body: { query: 'Maya Lin', businessId: mine.business._id.toString() },
+  });
+  assert.equal(scoped.payload.count, 1);
+  assert.equal(scoped.payload.data.matches[0].queueNumber, myTicket.queueNumber);
+  assert.equal(scoped.payload.data.matches[0].customer.name, 'Maya Lin');
 });
 
 test('a customer can be found by ticket number, however they type it', async () => {
@@ -264,6 +317,11 @@ test('a customer can be found by ticket number, however they type it', async () 
     assert.equal(res.payload.count, 1, `"${typed}" should find exactly one ticket`);
     assert.equal(res.payload.data.matches[0].queueNumber, third.queueNumber);
     assert.equal(res.payload.data.matches[0].placeInLine, 3);
+    assert.equal(
+      res.payload.data.matches[0].customer.name,
+      null,
+      'knowing a ticket number must not reveal who holds it'
+    );
   }
 });
 

@@ -244,6 +244,18 @@ const trackQueue = async (req, res, next) => {
       clauses.push({ customerId: { $in: namedCustomers.map((c) => c._id) } });
     }
 
+    // A ticket number is only unique per business, and a partial name matches
+    // many people, so the caller is not necessarily the person on a ticket.
+    // Names are therefore only echoed back when the search IS that customer's
+    // full name - otherwise a lookup would publish one tenant's customer names
+    // to anyone who types two letters.
+    const normalizedQuery = rawQuery.replace(/\s+/g, ' ').toLowerCase();
+    const exactNameMatchIds = new Set(
+      namedCustomers
+        .filter((c) => c.name.replace(/\s+/g, ' ').toLowerCase() === normalizedQuery)
+        .map((c) => c._id.toString())
+    );
+
     const filter = {
       status: { $in: ['WAITING', 'SERVING'] },
       $or: clauses,
@@ -299,7 +311,9 @@ const trackQueue = async (req, res, next) => {
           expectedEndAt: entry.expectedEndAt,
           extensionMinutes: entry.extensionMinutes || 0,
           customer: {
-            name: entry.customerId?.name,
+            name: exactNameMatchIds.has(entry.customerId?._id?.toString())
+              ? entry.customerId.name
+              : null,
           },
           service: {
             name: entry.serviceId?.name,

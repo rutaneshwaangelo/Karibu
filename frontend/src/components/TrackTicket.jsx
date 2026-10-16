@@ -110,7 +110,8 @@ export const TrackTicket = ({ onOpenTicket }) => {
       </div>
 
       <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '0.9rem' }}>
-        Lost your ticket? Type your name or ticket number to see exactly where you are in the line.
+        Lost your ticket? Type your full name or ticket number to see exactly where you are in the
+        line.
       </p>
 
       <form
@@ -226,7 +227,9 @@ export const TrackTicket = ({ onOpenTicket }) => {
                       {match.queueNumber}
                     </div>
                     <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-                      {match.customer?.name} · {match.service?.name}
+                      {/* The name is only echoed when the search was that person's
+                          full name; otherwise the ticket number identifies it. */}
+                      {[match.customer?.name, match.service?.name].filter(Boolean).join(' · ')}
                     </div>
                   </div>
 
