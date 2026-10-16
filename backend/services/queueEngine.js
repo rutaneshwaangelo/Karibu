@@ -172,6 +172,41 @@ const processQueueTick = async (io = null) => {
 };
 
 /**
+ * Opportunistic tick for serverless hosts.
+ *
+ * A serverless function cannot hold a `setInterval` loop open, so on Vercel the
+ * timer-based engine is unavailable (and Vercel Cron Jobs on the free plan only
+ * fire once a day). Instead, the read paths call this helper: it advances the
+ * queue at most once per MIN_TICK_INTERVAL_MS per warm instance, so a customer
+ * or staff request always returns a freshly-computed queue while repeat traffic
+ * costs a single timestamp comparison.
+ */
+const MIN_TICK_INTERVAL_MS = 5000;
+
+let lastTickAt = 0;
+let tickInFlight = null;
+
+const maybeProcessQueueTick = async (io = null) => {
+  // Coalesce concurrent requests onto one in-flight tick
+  if (tickInFlight) {
+    return tickInFlight;
+  }
+
+  const now = Date.now();
+  if (now - lastTickAt < MIN_TICK_INTERVAL_MS) {
+    return null;
+  }
+
+  lastTickAt = now;
+
+  tickInFlight = Promise.resolve(processQueueTick(io)).finally(() => {
+    tickInFlight = null;
+  });
+
+  return tickInFlight;
+};
+
+/**
  * Staff Time Adjustment Feature (+5, +10, +15, -5, -10 minutes)
  */
 const adjustServiceTime = async (businessId, queueId, adjustmentMinutes, io = null) => {
@@ -267,6 +302,7 @@ module.exports = {
   promoteNextCustomer,
   processQueueTick,
   adjustServiceTime,
+  maybeProcessQueueTick,
   startQueueEngine,
   stopQueueEngine,
 };

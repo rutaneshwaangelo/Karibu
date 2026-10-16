@@ -10,6 +10,7 @@ const {
   recalculateWaitTimes,
   promoteNextCustomer,
   adjustServiceTime,
+  maybeProcessQueueTick,
 } = require('../services/queueEngine');
 
 /**
@@ -135,6 +136,11 @@ const joinQueue = async (req, res, next) => {
  */
 const getQueueStatus = async (req, res, next) => {
   try {
+    // Advance the engine before reading, so the status/position returned here is
+    // never stale even on a serverless host where no timer is running.
+    // Throttled internally to one tick per 5s per warm instance.
+    await maybeProcessQueueTick(req.io);
+
     const queue = await Queue.findById(req.params.id)
       .populate('businessId', 'name location phone address')
       .populate('serviceId', 'name durationMinutes')
@@ -252,6 +258,10 @@ const leaveQueue = async (req, res, next) => {
  */
 const getBusinessActiveQueue = async (req, res, next) => {
   try {
+    // Keep the staff console live: auto-complete expired services and promote
+    // the next customer before we read the queue (throttled to 5s/instance).
+    await maybeProcessQueueTick(req.io);
+
     const businessId = req.user.businessId;
     const today = new Date();
     today.setHours(0, 0, 0, 0);
