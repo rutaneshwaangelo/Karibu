@@ -158,6 +158,11 @@ app.get('/api/health', (req, res) => {
     version: '1.0.0',
     environment: process.env.NODE_ENV || 'development',
     runtime: IS_SERVERLESS ? 'serverless' : 'long-lived',
+    // Which mechanism advances the line on this host. If a deployment ever
+    // reports anything other than 'timer' or 'request-tick', the queue is not
+    // being advanced at all - which is the first thing to check when tickets
+    // stop moving (this endpoint is the fastest way to spot a stale build).
+    queueEngine: IS_SERVERLESS ? 'request-tick' : 'timer',
     database: READY_STATES[dbState] || 'unknown',
     timestamp: new Date().toISOString(),
   });

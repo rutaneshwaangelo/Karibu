@@ -15,6 +15,7 @@ import {
   UserCheck,
   Ban,
   Building,
+  Loader2,
 } from 'lucide-react';
 
 export const StaffDashboard = () => {
@@ -27,6 +28,7 @@ export const StaffDashboard = () => {
   });
   const [loading, setLoading] = useState(true);
   const [adjustMessage, setAdjustMessage] = useState('');
+  const [completing, setCompleting] = useState(false);
 
   const businessId = user?.businessId;
 
@@ -74,6 +76,36 @@ export const StaffDashboard = () => {
       await fetchQueue();
     } catch (err) {
       alert(err.message || 'Failed to adjust service time.');
+    }
+  };
+
+  // Finish the customer at the desk right now and pull the next one in.
+  // The engine also does this when the timer expires, but the desk must never
+  // be stuck waiting on a clock (or on a background process) to move on.
+  const handleCompleteService = async () => {
+    if (!queueData.currentServing) return;
+
+    const current = queueData.currentServing;
+
+    if (
+      !window.confirm(
+        `Finish serving ${current.queueNumber} (${current.customerId?.name || 'this customer'}) and call the next customer?`
+      )
+    ) {
+      return;
+    }
+
+    setCompleting(true);
+    setAdjustMessage('');
+
+    try {
+      const res = await api.post(`/staff/queue/${current._id}/complete`);
+      setAdjustMessage(res.message || 'Service completed.');
+      await fetchQueue();
+    } catch (err) {
+      alert(err.message || 'Failed to complete this service.');
+    } finally {
+      setCompleting(false);
     }
   };
 
@@ -277,6 +309,21 @@ export const StaffDashboard = () => {
               <div style={{ marginBottom: '1.25rem' }}>
                 <TimeAdjustCluster onAdjust={handleAdjustTime} />
               </div>
+
+              {/* Finish now and advance the line */}
+              <button
+                className="btn btn-emerald"
+                onClick={handleCompleteService}
+                disabled={completing}
+                style={{ width: '100%', marginBottom: '1.25rem' }}
+              >
+                {completing ? (
+                  <Loader2 size={16} className="animate-spin" />
+                ) : (
+                  <CheckCircle size={16} />
+                )}
+                <span>Complete &amp; Call Next Customer</span>
+              </button>
 
               {adjustMessage && (
                 <div

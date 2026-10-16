@@ -69,6 +69,13 @@ function KaribuApp() {
     setCurrentView('customer-status');
   };
 
+  // A ticket found from the landing page tracker opens the same live status view
+  const handleTrackTicket = (queueId) => {
+    setSelectedBusiness(null);
+    setActiveQueueId(queueId);
+    setCurrentView('customer-status');
+  };
+
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       {/* Top Universal Navbar */}
@@ -77,7 +84,12 @@ function KaribuApp() {
       {/* Main View Area */}
       <main style={{ flex: 1 }}>
         <Suspense fallback={<ViewLoader />}>
-          {currentView === 'home' && (<Home onGetStarted={() => setCurrentView('customer-home')} />)}
+          {currentView === 'home' && (
+            <Home
+              onGetStarted={() => setCurrentView('customer-home')}
+              onTrackTicket={handleTrackTicket}
+            />
+          )}
           {currentView === 'customer-home' && (
           <CustomerHome onSelectBusiness={handleSelectBusiness} />
         )}

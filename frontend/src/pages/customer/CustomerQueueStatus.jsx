@@ -222,13 +222,15 @@ export const CustomerQueueStatus = ({ queueId, onBackToHome }) => {
               }}
             >
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.25rem' }}>
-                Position Ahead
+                Your Place in Line
               </div>
               <div style={{ fontSize: '1.8rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#96660F' }}>
-                #{queueData.position}
+                #{queueData.placeInLine}
               </div>
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-                {queueData.position === 1 ? 'Next in line!' : `${queueData.position - 1} customer(s) ahead`}
+                {queueData.peopleAhead > 0
+                  ? `${queueData.peopleAhead} ${queueData.peopleAhead === 1 ? 'customer' : 'customers'} ahead of you`
+                  : 'Nobody ahead of you — you are next!'}
               </div>
             </div>
 

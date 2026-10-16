@@ -1,5 +1,29 @@
 
-const API_BASE_URL = 'https://karibu-backend-0569.onrender.com/api';
+// Deploy-time override. Setting VITE_API_URL (e.g. https://my-api.example.com/api
+// or simply /api for a same-origin deploy) points the whole SPA at that backend
+// without a code change. The default keeps the current production host working.
+const DEFAULT_API_BASE_URL = 'https://karibu-backend-0569.onrender.com/api';
+
+export const API_BASE_URL = (
+  import.meta.env?.VITE_API_URL || DEFAULT_API_BASE_URL
+).replace(/\/+$/, '');
+
+/**
+ * Realtime server origin. Socket.IO is served by the API process itself, so the
+ * socket has to follow the configured API host instead of the page origin -
+ * otherwise a frontend and backend on different domains never connect.
+ * Defaults to the page's own origin for same-origin / relative API URLs.
+ */
+export const SOCKET_URL =
+  import.meta.env?.VITE_SOCKET_URL ||
+  (() => {
+    try {
+      return new URL(API_BASE_URL, window.location.origin).origin;
+    } catch {
+      // Relative API URL (e.g. "/api") - the socket lives on this same origin
+      return window.location.origin;
+    }
+  })();
 
 /**
  * Universal API request wrapper with token header injection and error normalization

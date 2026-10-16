@@ -121,6 +121,8 @@ This section documents the **Requirement, Scalability, Security, Performance and
 | R8 | Non-functional | The platform must survive spikes in concurrent queue activity without a rewrite | Stateless API, capped connection pool, indexed queries |
 | R9 | Non-functional | Credentials and tenant data must be protected against common attacks | bcrypt, JWT, helmet, rate limiting, CORS allowlist, body-size limits |
 | R10 | Non-functional | The system must remain correct on a serverless host with no long-lived process | Cached DB connection, opportunistic queue tick, secured cron |
+| R11 | Functional | A customer who lost their ticket link can find it again by name or ticket number and see their place in the line | `POST /api/customer/queue/track`, `computePlaceInLine()` |
+| R12 | Functional | Staff can finish the current service immediately and call the next customer without waiting for the timer | `completeCurrentService()`, `POST /api/staff/queue/:id/complete` |
 
 ### 2. Performance
 
@@ -151,6 +153,8 @@ This section documents the **Requirement, Scalability, Security, Performance and
 | First-paint JS + CSS (raw) | 396.81 kB | 274.99 kB | **−30.7%** |
 | First-paint JS + CSS (gzip) | 110.87 kB | 86.15 kB | **−22.3%** |
 | Heaviest single chunk (raw) | 379.42 kB | 211.00 kB | −44.4% |
+
+The Home-page ticket tracker (R11) is the one addition to that critical path: first paint measures **282.65 kB raw / 88.08 kB gzip** with it (−28.8% / −20.6% versus the original 396.81 kB / 110.87 kB). It polls only while a lookup is on screen.
 
 Dashboards and the Socket.IO client are no longer in the critical path — they download only when that view is opened (Admin 23.0 kB, Owner 28.5 kB, Staff 12.6 kB, Socket.IO 41.2 kB raw).
 
@@ -186,6 +190,8 @@ The queue engine is the heart of the system and previously **did not run in prod
 1. **Timer engine** (`startQueueEngine`) — unchanged, running wherever a long-lived process exists (local dev, self-hosted, Docker).
 2. **Opportunistic tick** (`maybeProcessQueueTick`) — called by the customer status and staff console read paths, throttled to one run per 5s per warm instance. This is what keeps the queue live on Vercel, where the HTTP handler is the only code that runs.
 3. **Secured cron endpoint** (`GET /api/cron/queue-tick`) — a safety net that sweeps expired services even when nobody has the app open.
+
+The desk is never a hostage of the clock: `POST /api/staff/queue/:id/complete` finishes the customer at the desk immediately and promotes the next one through the same `completeQueueEntry()` bookkeeping the timer uses. Both paths are covered by the request-path tick, including the public ticket lookup, so a place in line is never returned from a stale queue.
 
 Verified end-to-end against a live database (10/10 checks): an expired `SERVING` entry is auto-completed with a computed `actualDurationMinutes`, the next `WAITING` customer is promoted with a fresh `expectedEndAt`, remaining waits are recalculated, and a single tick never double-promotes.
 

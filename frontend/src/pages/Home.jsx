@@ -10,6 +10,7 @@ import {
   Sparkles,
   Zap,
 } from 'lucide-react';
+import TrackTicket from '../components/TrackTicket';
 import './Home.css';
 
 const FEATURES = [
@@ -72,7 +73,7 @@ const STATS = [
   { value: '100', suffix: '%', label: 'Real-time updates via Socket.IO' },
 ];
 
-export default function Home({ onGetStarted }) {
+export default function Home({ onGetStarted, onTrackTicket }) {
   const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
     e.currentTarget.style.setProperty('--mx', `${e.clientX - rect.left}px`);
@@ -118,6 +119,9 @@ export default function Home({ onGetStarted }) {
                 <strong>Live now</strong> · Kibali Executive Salon &amp; Barber is serving customers today
               </span>
             </div>
+
+            {/* Track an existing ticket: name or ticket number -> place in line */}
+            <TrackTicket onOpenTicket={onTrackTicket} />
           </div>
 
           {/* ---- Hero visual: live ticket mock ---- */}

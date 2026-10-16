@@ -17,6 +17,49 @@ const generateQueueNumber = async (businessId) => {
 };
 
 /**
+ * Normalise a queue document's businessId, which may be a raw ObjectId or a
+ * populated business document depending on the query that produced it.
+ */
+const businessIdOf = (queue) => queue.businessId?._id || queue.businessId;
+
+/**
+ * Where a customer stands in the line: 1 means "you are next".
+ *
+ * A SERVING customer is by definition not waiting, so they get 0. Counting the
+ * customer currently being served as "ahead" keeps the number rising as the
+ * line moves, and +1 turns it into a human-facing place ("you are 3rd in line")
+ * instead of an off-by-one "0 customers ahead" on an empty desk.
+ */
+const computePlaceInLine = async (queue) => {
+  if (queue.status === 'SERVING') {
+    return { placeInLine: 0, peopleAhead: 0 };
+  }
+
+  if (queue.status !== 'WAITING') {
+    return { placeInLine: null, peopleAhead: null };
+  }
+
+  const businessId = businessIdOf(queue);
+
+  // FIFO is decided by joinedAt, with _id breaking same-millisecond ties so the
+  // displayed place always matches the order the engine promotes in.
+  const [waitingAhead, servingAhead] = await Promise.all([
+    Queue.countDocuments({
+      businessId,
+      status: 'WAITING',
+      $or: [
+        { joinedAt: { $lt: queue.joinedAt } },
+        { joinedAt: queue.joinedAt, _id: { $lt: queue._id } },
+      ],
+    }),
+    Queue.exists({ businessId, status: 'SERVING' }),
+  ]);
+
+  const peopleAhead = waitingAhead + (servingAhead ? 1 : 0);
+  return { placeInLine: peopleAhead + 1, peopleAhead };
+};
+
+/**
  * Recalculate estimated waiting times for all WAITING customers in a business
  */
 const recalculateWaitTimes = async (businessId) => {
@@ -39,7 +82,7 @@ const recalculateWaitTimes = async (businessId) => {
       businessId,
       status: 'WAITING',
     })
-      .sort({ joinedAt: 1 })
+      .sort({ joinedAt: 1, _id: 1 })
       .populate('serviceId', 'durationMinutes');
 
     for (const item of waitingQueue) {
@@ -74,7 +117,7 @@ const promoteNextCustomer = async (businessId, io = null) => {
       businessId,
       status: 'WAITING',
     })
-      .sort({ joinedAt: 1 })
+      .sort({ joinedAt: 1, _id: 1 })
       .populate('serviceId', 'name durationMinutes')
       .populate('customerId', 'name phone');
 
@@ -118,6 +161,69 @@ const promoteNextCustomer = async (businessId, io = null) => {
 };
 
 /**
+ * Mark one queue entry as COMPLETED and tell the customer.
+ *
+ * Shared by the automatic expiry sweep and the staff "Complete & call next"
+ * action so both paths produce identical bookkeeping (status, completedAt and a
+ * computed actualDurationMinutes).
+ */
+const completeQueueEntry = async (entry, io = null, now = new Date()) => {
+  entry.status = 'COMPLETED';
+  entry.completedAt = now;
+
+  if (entry.startedAt) {
+    entry.actualDurationMinutes = Math.max(
+      1,
+      Math.round((now.getTime() - new Date(entry.startedAt).getTime()) / 60000)
+    );
+  }
+
+  await entry.save();
+
+  console.log(
+    `[QueueEngine] Completed: ${entry.queueNumber} (${entry.serviceId?.name || 'service'}) for business ${businessIdOf(entry)}`
+  );
+
+  // Notify the customer that their service is over
+  if (io) {
+    io.to(`queue:${entry._id}`).emit('customer_status_changed', {
+      status: 'COMPLETED',
+      queue: entry,
+    });
+  }
+
+  return entry;
+};
+
+/**
+ * Staff action: finish the customer at the desk right now and call the next one.
+ *
+ * The timer engine normally does this on its own, but a desk must never be
+ * stuck waiting for a clock (or for a background process that a given host may
+ * not be running), so staff can always advance the line manually.
+ */
+const completeCurrentService = async (businessId, queueId, io = null) => {
+  const entry = await Queue.findOne({ _id: queueId, businessId })
+    .populate('serviceId', 'name durationMinutes')
+    .populate('customerId', 'name phone');
+
+  if (!entry) {
+    throw new Error('Queue record not found in this business.');
+  }
+
+  if (entry.status !== 'SERVING') {
+    throw new Error(`Cannot complete: customer is currently ${entry.status}, not SERVING.`);
+  }
+
+  await completeQueueEntry(entry, io);
+
+  // Advance the line immediately instead of waiting for the next timer tick
+  const promoted = await promoteNextCustomer(businessId, io);
+
+  return { completed: entry, nextServing: promoted };
+};
+
+/**
  * Periodic tick: Checks for expired SERVING entries, completes them, and starts next customer
  */
 const processQueueTick = async (io = null) => {
@@ -133,34 +239,16 @@ const processQueueTick = async (io = null) => {
       .populate('customerId', 'name');
 
     for (const entry of expiredEntries) {
-      entry.status = 'COMPLETED';
-      entry.completedAt = now;
+      const businessId = businessIdOf(entry);
 
-      if (entry.startedAt) {
-        entry.actualDurationMinutes = Math.max(
-          1,
-          Math.round((now.getTime() - new Date(entry.startedAt).getTime()) / 60000)
-        );
-      }
-
-      await entry.save();
-
-      console.log(`[QueueEngine] Auto-completed: ${entry.queueNumber} (${entry.serviceId?.name}) for business ${entry.businessId}`);
-
-      // Notify customer that service completed
-      if (io) {
-        io.to(`queue:${entry._id}`).emit('customer_status_changed', {
-          status: 'COMPLETED',
-          queue: entry,
-        });
-      }
+      await completeQueueEntry(entry, io, now);
 
       // Automatically promote next waiting customer for this business
-      await promoteNextCustomer(entry.businessId, io);
+      await promoteNextCustomer(businessId, io);
 
       // Notify business dashboard
       if (io) {
-        io.to(`business:${entry.businessId}`).emit('queue_updated', {
+        io.to(`business:${businessId}`).emit('queue_updated', {
           action: 'customer_completed',
           completedCustomer: entry,
         });
@@ -300,6 +388,10 @@ module.exports = {
   generateQueueNumber,
   recalculateWaitTimes,
   promoteNextCustomer,
+  computePlaceInLine,
+  businessIdOf,
+  completeQueueEntry,
+  completeCurrentService,
   processQueueTick,
   adjustServiceTime,
   maybeProcessQueueTick,
